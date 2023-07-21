@@ -1,0 +1,272 @@
+@mixin pos ($p, $l, $t, $r, $b, $z){
+  position: $p;
+  left: $l; top: $t; right: $r; bottom: $b;
+  z-index: $z;
+}  
+
+@mixin wh ($w, $h){
+  width: $w; height: $h
+}  
+@mixin bgColor($r, $g, $b, $a, $bsx, $bsy, $bss, $bsc ) {
+  background-color: rgba($r, $g, $b, $a);
+  box-shadow: $bsx $bsy $bss $bsc
+}  
+@mixin btnStyle($br, $b){
+  border-radius: $br;
+  border: $b;
+  cursor: pointer;
+  font-weight: bold;
+}
+@mixin mp($m, $p){
+  margin: $m;
+  padding: $p;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+header {
+  
+
+  nav{
+    height: 50px;
+    @include mp(0, 0);
+    @include bgColor(0, 0, 0, 0.7, 0, 0, .5rem, #fff);
+    @include pos(fixed, 0, 0, 0, 0, 1);
+    ul{
+      @include mp(0 , 15px 0);
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      li{
+        display: relative;
+        list-style: none;
+        @include mp(0 30px, 0);
+        a{
+          @include mp(0, 10px);
+          text-decoration: none;
+          color: #fff;
+          font-weight: bold;
+          &:hover{
+            text-shadow: 0 0 5px #fff;
+            @include bgColor(255, 255, 255, .3, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
+          }
+        }
+        .dropdown{
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          transition: all .4s ;
+          @include mp(4px 0, 0);
+          @include bgColor(0, 0, 0, .7, 0, 0, 0, 0);
+          a{
+            @include mp(0, 8px 10px);
+            color: #fff;
+            &:hover{
+              text-shadow: 0 0 5px #fff;
+              @include bgColor(255, 255, 255, .3, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.navbtn{
+  @include pos (fixed, null, 4px, 40px, null, 5);
+  // transform: translate(-50%,-50%);
+  @include btnStyle(25px, 3px solid aquamarine);
+  @include mp(null, 10px 25px);
+  @include bgColor(0, 0, 0, 0, 1px, 1px, 20px, aquamarine);
+  color: #fff;
+}
+.hovertext{
+  @include bgColor(150, 150, 150, .5, 0, 0, 18px, rgba(150,150,150,1));
+  @include wh(166px, 30px);
+  text-align: center;
+  line-height: 30px;
+  @include mp(0, 10px);
+  color: #fff;
+  @include pos(absolute, null, 0, 135px, null, 1);
+  border-radius:50px;
+  display: none
+}
+
+body{
+  @include mp(0, 0);
+  box-sizing: border-box;
+  background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20230323/pngtree-nebula-blue-moon-stars-twinkling-background-image_2051892.jpg);
+  background-size: cover;
+  min-height: 300vh;
+  &::-webkit-scrollbar {
+    display: none;
+  }  
+
+}  
+.openbtn{
+  @include pos (fixed, null, 55px, 34px, null, 5);
+  // transform: translate(-50%,-50%);
+  @include btnStyle(25px, 3px solid aquamarine);
+  @include mp(null, 10px 25px);
+  @include bgColor(0, 0, 0, 0, 1px, 1px, 20px, aquamarine);
+  color: #fff;
+}  
+.container {
+  @include pos (fixed, 0, 0, null, null, 3);
+  @include wh (100%, 100vh);
+  @include bgColor(0, 0, 0, .7, null, null, null, null);
+  display: none;
+  
+}  
+.modal-window{
+  @include pos (fixed, 50%, 50%, null, null, 10);
+  transform: translate(-50%, -50%);
+  @include wh(500px, 300px);
+  @include bgColor(255, 255, 255, .3, 0, 0, 1rem, rgba(255, 255, 255, .5));
+  border-radius: .5rem;
+  backdrop-filter: blur(5px);
+  text-align: center;
+  color:  #fff;
+  display: none;
+  
+  h3{
+    @include mp(10px 0, 0);
+    text-shadow: 0 0 5px #fff;
+    font-size: 4rem;
+  }
+  // p{
+  //   @include mp(null, 0px 40px);
+  // }
+  button {
+    background: none;
+    @include btnStyle(0, none);
+    @include pos(fixed, null, 10px, 10px, null, 5);
+    color:  #fff;
+  }
+  form{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    div{
+      display: flex;
+      @include wh(auto, 50px);
+      label{
+        font-size: 1.5rem;
+        text-align: right;
+        flex: 1;
+        // border-bottom: 1px solid rgba(0,0,0,0.5);
+        @include mp(10px, 0 20px);
+        @include wh(40px, auto)
+      }
+      input{
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 1.5rem;
+        color:#fff;
+        flex: 3;
+        border-bottom: 1px solid rgba(0,0,0,0.5);
+        @include wh(250px, auto)
+      }
+    }
+    .loginbtn{
+      @include mp(auto, 10px);
+      @include pos(fixed, null,null,null, 20px, null);
+      @include btnStyle(7px, none);
+      &:hover{
+        @include bgColor(127, 255, 212, 1, 1px, 1px, 10px, aquamarine)
+      }
+    }
+  }
+}  
+.totop{
+  @include wh(50px, 50px);
+  @include btnStyle(50%,none);
+  @include bgColor(127, 255, 212, 1, 1px, 1px, 10px, aquamarine);
+  @include pos(fixed, null, null, 2.5%, 3%, 2);
+
+  .material-symbols-outlined{
+    @include pos(relative, null, 2px, null, null, null)
+  }
+  p{
+    @include mp(0, null);
+    font-size: 0.7rem;
+    font-weight: 200;
+  }
+}
+.item-container{
+  @include bgColor(255, 255, 255, .3, 0, 0, 1rem, aquamarine);
+  @include wh(80%, 250px);
+  @include mp(100px auto, null);
+  @include pos (fixed, 50%, 35%, null, null, 1);
+  transform: translate(-50%, -50%);
+  display: flex;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}
+.box{
+  @include wh(200px, 100%);
+  margin-right: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  .imgbox{
+    @include wh(100%, 80%);
+    img{
+      @include wh(100%, 100%);
+      object-fit: cover;
+    }
+  }
+  .textbox{
+    @include wh(100%, 20%);
+    @include bgColor(0, 0, 0, .5, 0, 0, 0, 0);
+    overflow: hidden;
+    h3{
+      color: #fff;
+      font-size: 0.8rem;
+      @include mp(0, 8px 11px);
+      text-align:center;
+      
+    }
+  }
+}
+
+.msgbox{
+  @include bgColor(127, 255, 212, 1, 1px, 1px, 10px, aquamarine);
+  @include wh(200px, 60px);
+  @include pos(fixed, null, null, 20px, 100px, 2);
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 60px;
+  font-weight: bold;
+  border-radius: 10px;
+  
+}
+
+
+
+
+
+.show{
+  display: block;
+}
+
+.close{
+  display: none;
+}
+
+.visi{
+  visibility: visible;
+}
+
+.novisi{
+  visibility: hidden;
+}

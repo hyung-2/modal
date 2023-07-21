@@ -1,0 +1,326 @@
+html {
+  scroll-behavior: smooth;
+}
+
+header nav {
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 0.5rem #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+header nav ul {
+  margin: 0;
+  padding: 15px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+header nav ul li {
+  display: relative;
+  list-style: none;
+  margin: 0 30px;
+  padding: 0;
+}
+header nav ul li a {
+  margin: 0;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+header nav ul li a:hover {
+  text-shadow: 0 0 5px #fff;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0.3rem rgba(255, 255, 255, 0.5);
+}
+header nav ul li .dropdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  transition: all 0.4s;
+  margin: 4px 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 0 0;
+}
+header nav ul li .dropdown a {
+  margin: 0;
+  padding: 8px 10px;
+  color: #fff;
+}
+header nav ul li .dropdown a:hover {
+  text-shadow: 0 0 5px #fff;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0.3rem rgba(255, 255, 255, 0.5);
+}
+
+.navbtn {
+  position: fixed;
+  top: 4px;
+  right: 40px;
+  z-index: 5;
+  border-radius: 25px;
+  border: 3px solid aquamarine;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 25px;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: 1px 1px 20px aquamarine;
+  color: #fff;
+}
+
+.hovertext {
+  background-color: rgba(150, 150, 150, 0.5);
+  box-shadow: 0 0 18px rgb(150, 150, 150);
+  width: 166px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  right: 135px;
+  z-index: 1;
+  border-radius: 50px;
+  display: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20230323/pngtree-nebula-blue-moon-stars-twinkling-background-image_2051892.jpg);
+  background-size: cover;
+  min-height: 300vh;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.openbtn {
+  position: fixed;
+  top: 55px;
+  right: 34px;
+  z-index: 5;
+  border-radius: 25px;
+  border: 3px solid aquamarine;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 25px;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: 1px 1px 20px aquamarine;
+  color: #fff;
+}
+
+.container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+}
+
+.modal-window {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 300px;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  text-align: center;
+  color: #fff;
+  display: none;
+}
+.modal-window h3 {
+  margin: 10px 0;
+  padding: 0;
+  text-shadow: 0 0 5px #fff;
+  font-size: 4rem;
+}
+.modal-window button {
+  background: none;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  color: #fff;
+}
+.modal-window form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal-window form div {
+  display: flex;
+  width: auto;
+  height: 50px;
+}
+.modal-window form div label {
+  font-size: 1.5rem;
+  text-align: right;
+  flex: 1;
+  margin: 10px;
+  padding: 0 20px;
+  width: 40px;
+  height: auto;
+}
+.modal-window form div input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1.5rem;
+  color: #fff;
+  flex: 3;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  width: 250px;
+  height: auto;
+}
+.modal-window form .loginbtn {
+  margin: auto;
+  padding: 10px;
+  position: fixed;
+  bottom: 20px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.modal-window form .loginbtn:hover {
+  background-color: rgb(127, 255, 212);
+  box-shadow: 1px 1px 10px aquamarine;
+}
+
+.totop {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: rgb(127, 255, 212);
+  box-shadow: 1px 1px 10px aquamarine;
+  position: fixed;
+  right: 2.5%;
+  bottom: 3%;
+  z-index: 2;
+}
+.totop .material-symbols-outlined {
+  position: relative;
+  top: 2px;
+}
+.totop p {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 200;
+}
+
+.item-container {
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 1rem aquamarine;
+  width: 80%;
+  height: 250px;
+  margin: 100px auto;
+  position: fixed;
+  left: 50%;
+  top: 35%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.item-container::-webkit-scrollbar {
+  display: none;
+}
+
+.box {
+  width: 200px;
+  height: 100%;
+  margin-right: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+.box .imgbox {
+  width: 100%;
+  height: 80%;
+}
+.box .imgbox img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.box .textbox {
+  width: 100%;
+  height: 20%;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 0;
+  overflow: hidden;
+}
+.box .textbox h3 {
+  color: #fff;
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 8px 11px;
+  text-align: center;
+}
+
+.msgbox {
+  background-color: rgb(127, 255, 212);
+  box-shadow: 1px 1px 10px aquamarine;
+  width: 200px;
+  height: 60px;
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  z-index: 2;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 60px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.show {
+  display: block;
+}
+
+.close {
+  display: none;
+}
+
+.visi {
+  visibility: visible;
+}
+
+.novisi {
+  visibility: hidden;
+}/*# sourceMappingURL=modal.css.map */

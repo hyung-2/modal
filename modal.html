@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모달창 만들기</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="modal.css">
+</head>
+<body>
+  <header>
+    <nav class="close">
+      <ul>
+        <li>
+          <a href="#drop" class="menuone">메뉴1</a>
+          <div class="dropdown novisi" id="drop">
+            <a href="">링크1</a>
+            <a href="">링크2</a>
+            <a href="">링크3</a>
+          </div>
+        </li>
+        <li><a href="" class="menu">메뉴2</a></li>
+        <li><a href="" class="menu">메뉴3</a></li>
+        <li>
+          <button class="navbtn" type="button">more</button>
+          <div class="hovertext">더 많은 컨텐츠 즐기기</div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <button class="openbtn" type="button">'Click!'</button>
+  <div class="container">
+    <div class="modal-window">
+      <button type="button" class="closebtn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <form action="/">
+        <h3>로그인</h3>
+        <div class="id">
+            <label for="username">ID</label>
+            <input class="user" type="text" name="" id="username">
+        </div>
+        <div class="pw">
+            <label for="userpw">PW</label>
+            <input class="user" type="password" name="" id="userpw">
+        </div>
+        <input class="loginbtn" type="submit" value="로그인하기">
+      </form>
+      <!-- <h3>모달창</h3>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, sint incidunt accusamus nisi esse nihil architecto molestiae ex cum aliquam, porro, asperiores fuga officiis. Alias ratione voluptatibus molestiae tempore sit?
+      Perspiciatis illo accusantium, qui est dicta sint facere. Mollitia doloremque iste tempora, eum voluptate qui? Unde eveniet officiis est. Beatae deleniti iusto delectus illo porro dolorem praesentium sequi eos dignissimos!</p> -->
+    </div>
+  </div>
+  <div class="item-container"></div>
+  <button class="totop close" type="button">
+    <span class="material-symbols-outlined">arrow_upward</span>
+      <p>Top</p>
+  </button>
+  <script src="modal.js"></script>
+</body>
+</html>
