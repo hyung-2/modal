@@ -9,9 +9,18 @@
   <link rel="stylesheet" href="modal.css">
 </head>
 <body>
+  <div class="loadingbox">
+    <div class="circle-con">
+      <div class="circle circle-style"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    Loading ...
+  </div>
   <header>
     <nav class="close">
-      <ul>
+      <ul class="ul">
         <li>
           <a href="#drop" class="menuone">메뉴1</a>
           <div class="dropdown novisi" id="drop">
@@ -27,6 +36,8 @@
           <div class="hovertext">더 많은 컨텐츠 즐기기</div>
         </li>
       </ul>
+      <button class="menubtn show"><span class="material-symbols-outlined">menu</span></button>
+      <button type="button" class="closebtn close"><span class="material-symbols-outlined">close</span></button>
     </nav>
   </header>
   <button class="openbtn" type="button">'Click!'</button>
@@ -53,6 +64,10 @@
     </div>
   </div>
   <div class="item-container"></div>
+  <div class="itemview-container">
+    <div class="viewbox"></div>
+    <div class="viewcontent"></div>
+  </div>
   <button class="totop close" type="button">
     <span class="material-symbols-outlined">arrow_upward</span>
       <p>Top</p>

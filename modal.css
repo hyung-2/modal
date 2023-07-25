@@ -18,6 +18,7 @@ header nav {
 header nav ul {
   margin: 0;
   padding: 15px 0;
+  visibility: visible;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -62,6 +63,10 @@ header nav ul li .dropdown a:hover {
   box-shadow: 0 0 0.3rem rgba(255, 255, 255, 0.5);
 }
 
+.menubtn {
+  display: none;
+}
+
 .navbtn {
   position: fixed;
   top: 4px;
@@ -75,6 +80,7 @@ header nav ul li .dropdown a:hover {
   background-color: rgba(0, 0, 0, 0);
   box-shadow: 1px 1px 20px aquamarine;
   color: #fff;
+  transition: 0.2s;
 }
 
 .hovertext {
@@ -93,6 +99,7 @@ header nav ul li .dropdown a:hover {
   z-index: 1;
   border-radius: 50px;
   display: none;
+  transition: 0.2s;
 }
 
 body {
@@ -120,6 +127,7 @@ body::-webkit-scrollbar {
   background-color: rgba(0, 0, 0, 0);
   box-shadow: 1px 1px 20px aquamarine;
   color: #fff;
+  transition: 0.2s;
 }
 
 .container {
@@ -156,31 +164,20 @@ body::-webkit-scrollbar {
   text-shadow: 0 0 5px #fff;
   font-size: 4rem;
 }
-.modal-window button {
-  background: none;
-  border-radius: 0;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 5;
-  color: #fff;
-}
-.modal-window form {
+
+form {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.modal-window form div {
+form div {
   display: flex;
   width: auto;
   height: 50px;
 }
-.modal-window form div label {
+form div label {
   font-size: 1.5rem;
   text-align: right;
   flex: 1;
@@ -189,7 +186,7 @@ body::-webkit-scrollbar {
   width: 40px;
   height: auto;
 }
-.modal-window form div input {
+form div input {
   border: none;
   background: transparent;
   outline: none;
@@ -200,7 +197,7 @@ body::-webkit-scrollbar {
   width: 250px;
   height: auto;
 }
-.modal-window form .loginbtn {
+form .loginbtn {
   margin: auto;
   padding: 10px;
   position: fixed;
@@ -210,9 +207,22 @@ body::-webkit-scrollbar {
   cursor: pointer;
   font-weight: bold;
 }
-.modal-window form .loginbtn:hover {
+form .loginbtn:hover {
   background-color: rgb(127, 255, 212);
   box-shadow: 1px 1px 10px aquamarine;
+}
+
+.closebtn {
+  background: none;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  color: #fff;
 }
 
 .totop {
@@ -244,7 +254,7 @@ body::-webkit-scrollbar {
   box-shadow: 0 0 1rem aquamarine;
   width: 80%;
   height: 250px;
-  margin: 100px auto;
+  margin: 50px auto;
   position: fixed;
   left: 50%;
   top: 35%;
@@ -309,6 +319,74 @@ body::-webkit-scrollbar {
   border-radius: 10px;
 }
 
+.viewbox {
+  width: 50%;
+}
+.viewbox img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.viewcontent {
+  width: 50%;
+}
+
+.loadingbox {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 0 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 5rem;
+}
+.loadingbox .circle-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 47%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+}
+
+.circle {
+  background-color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin: 0 11px;
+}
+
+.circle-style {
+  background-color: rgb(127, 255, 212);
+  box-shadow: 1px 1px 10px aquamarine;
+}
+
+.itemview-container {
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 1rem aquamarine;
+  width: 70%;
+  height: 285px;
+  margin: 50px auto;
+  position: fixed;
+  left: 50%;
+  top: 73%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
 .show {
   display: block;
 }
@@ -323,4 +401,93 @@ body::-webkit-scrollbar {
 
 .novisi {
   visibility: hidden;
+}
+
+.nobg {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .navbtn {
+    scale: 0.8;
+    right: -45px;
+    top: -179px;
+  }
+  .hovertext {
+    top: -182px;
+    right: 46px;
+  }
+  header nav .closebtn .material-symbols-outlined {
+    font-size: 2rem;
+  }
+  header nav ul {
+    visibility: hidden;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 0.5rem #fff;
+  }
+  header nav ul li {
+    position: relative;
+    left: 48%;
+    top: 35px;
+    transform: translate(-50%, 0);
+    margin: 10px;
+  }
+  header nav ul li .dropdown {
+    flex-wrap: wrap;
+    position: absolute;
+    left: 60px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  header nav ul li .dropdown a {
+    width: 45px;
+    height: auto;
+    text-align: center;
+    padding: 5px;
+    position: relative;
+    top: -9px;
+  }
+  .openbtn {
+    top: 8%;
+    right: -8%;
+    transform: translate(-50%, 0);
+    width: 100px;
+    height: auto;
+  }
+  .modal-window {
+    width: 400px;
+    height: 250px;
+  }
+  .modal-window h3 {
+    font-size: 3rem;
+  }
+  .modal-window form div {
+    height: auto;
+    margin-right: 51px;
+  }
+  .modal-window form div label {
+    font-size: 1.2rem;
+    padding-right: 0;
+  }
+  .modal-window form div input {
+    font-size: 1.2rem;
+    margin: 10px;
+  }
+  .menubtn {
+    position: relative;
+    left: 88%;
+    top: -326%;
+    z-index: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .menubtn .material-symbols-outlined {
+    color: #fff;
+    font-size: 2rem;
+  }
 }/*# sourceMappingURL=modal.css.map */

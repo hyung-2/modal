@@ -35,6 +35,7 @@ header {
     @include pos(fixed, 0, 0, 0, 0, 1);
     ul{
       @include mp(0 , 15px 0);
+      visibility: visible;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
@@ -73,6 +74,10 @@ header {
     }
   }
 }
+.menubtn{
+  display: none;
+}
+
 .navbtn{
   @include pos (fixed, null, 4px, 40px, null, 5);
   // transform: translate(-50%,-50%);
@@ -80,6 +85,7 @@ header {
   @include mp(null, 10px 25px);
   @include bgColor(0, 0, 0, 0, 1px, 1px, 20px, aquamarine);
   color: #fff;
+  transition: .2s;
 }
 .hovertext{
   @include bgColor(150, 150, 150, .5, 0, 0, 18px, rgba(150,150,150,1));
@@ -90,7 +96,8 @@ header {
   color: #fff;
   @include pos(absolute, null, 0, 135px, null, 1);
   border-radius:50px;
-  display: none
+  display: none;
+  transition: .2s;
 }
 
 body{
@@ -111,6 +118,7 @@ body{
   @include mp(null, 10px 25px);
   @include bgColor(0, 0, 0, 0, 1px, 1px, 20px, aquamarine);
   color: #fff;
+  transition: .2s;
 }  
 .container {
   @include pos (fixed, 0, 0, null, null, 3);
@@ -138,11 +146,7 @@ body{
   // p{
   //   @include mp(null, 0px 40px);
   // }
-  button {
-    background: none;
-    @include btnStyle(0, none);
-    @include pos(fixed, null, 10px, 10px, null, 5);
-    color:  #fff;
+
   }
   form{
     position: relative;
@@ -181,7 +185,12 @@ body{
       }
     }
   }
-}  
+.closebtn {
+  background: none;
+  @include btnStyle(0, none);
+  @include pos(fixed, null, 10px, 10px, null, 5);
+  color:  #fff;
+} 
 .totop{
   @include wh(50px, 50px);
   @include btnStyle(50%,none);
@@ -200,7 +209,7 @@ body{
 .item-container{
   @include bgColor(255, 255, 255, .3, 0, 0, 1rem, aquamarine);
   @include wh(80%, 250px);
-  @include mp(100px auto, null);
+  @include mp(50px auto, null);
   @include pos (fixed, 50%, 35%, null, null, 1);
   transform: translate(-50%, -50%);
   display: flex;
@@ -251,6 +260,58 @@ body{
   
 }
 
+.viewbox{
+  width: 50%;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.viewcontent{
+  width: 50%;
+}
+
+.loadingbox {
+  display: block;
+  @include bgColor(0, 0, 0, 0.9, 0, 0, 0, 0);
+  @include pos (fixed, 0, 0, null, null, 10);
+  @include wh(100%, 100vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 5rem;
+  
+  .circle-con{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include pos(fixed, 47%, 42%, null, null, null);
+    transform: translate(-50%, -50%);
+  }
+}
+.circle{
+  background-color: #fff;
+  @include wh(18px, 18px);
+  border-radius: 50%;
+  margin: 0 11px;
+}
+.circle-style{
+  @include bgColor(127, 255, 212, 1, 1px, 1px, 10px, aquamarine);
+}
+
+.itemview-container{
+  @include bgColor(255, 255, 255, .3, 0, 0, 1rem, aquamarine);
+  @include wh(70%, 285px);
+  @include mp(50px auto, null);
+  @include pos (fixed, 50%, 73%, null, null, 1);
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
+
 
 
 
@@ -269,4 +330,86 @@ body{
 
 .novisi{
   visibility: hidden;
+}
+
+.nobg{
+  background-color: transparent;
+  box-shadow: none;
+}
+
+@media (max-width:480px){
+  .navbtn{
+    scale: 0.8;
+    right: -45px;
+    top: -179px;
+  }
+  .hovertext{
+    top: -182px;
+    right: 46px;
+  }
+  header nav{ 
+    .closebtn{
+      .material-symbols-outlined{
+        font-size: 2rem;
+      }
+    }
+    ul {
+      visibility: hidden;
+      flex-direction: column;
+      @include bgColor(0, 0, 0, 0.7, 0, 0, .5rem, #fff);
+
+      li{
+        @include pos(relative, 48%, 35px, null, null, null);
+        transform: translate(-50%,0);
+        margin: 10px;
+        .dropdown{
+          flex-wrap: wrap;
+          @include pos(absolute, 60px, 0, 0, 0, 0);
+          a{
+            @include wh (45px, auto);
+            text-align: center;
+            padding: 5px;
+            position: relative;
+            top: -9px;
+          }
+        }
+      }
+    }
+  }
+  .openbtn{
+    top: 8%; right: -8%;
+    transform: translate(-50%, 0);
+    @include wh(100px, auto)
+  }
+  .modal-window{
+    @include wh(400px, 250px);
+    
+    h3{
+      font-size: 3rem;
+    }
+    form{
+      div{
+        height: auto;
+        margin-right: 51px;
+        label{
+          font-size: 1.2rem;
+          padding-right: 0;
+        }
+        input{
+          font-size: 1.2rem;
+          margin: 10px;
+        }
+      }
+    }
+  }
+  .menubtn{
+    @include pos(relative, 88%, -326%, null, null, 0);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    .material-symbols-outlined{
+      color: #fff;
+      font-size: 2rem;
+    }
+  }
 }

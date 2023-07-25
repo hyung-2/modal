@@ -87,12 +87,12 @@ window.addEventListener('scroll',navp)
 
 //2일차 - 가운데 api로 가져온 데이터 스크롤추가
 
-const url = 'https://the-birthday-cake-db.p.rapidapi.com/';
+const url = 'https://chinese-food-db.p.rapidapi.com/';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'the-birthday-cake-db.p.rapidapi.com'
+		'X-RapidAPI-Host': 'chinese-food-db.p.rapidapi.com'
 	}
 };
 const itemCon = document.querySelector('.item-container')
@@ -148,15 +148,36 @@ function showData (foodList){
     msgbox.innerText = '컨텐츠 로드 완료 !'
     msgbox.classList.add('show')
 
-    
+    const viewCon = document.querySelector('.itemview-container')
+    const viewBox = document.querySelector('.viewbox')
+    const viewcontent = document.querySelector('.viewcontent')
+
+    function moreImg (e){
+      let targetImg = viewBox.append(e.target)
+
+   
+    }
+
+    itemCon.addEventListener('click',moreImg)
+
+    let loadingBox = document.querySelector('.loadingbox')
+
+    loading()
+    setTimeout(()=>{
+      loadingBox.classList.add('close')
+      clearInterval(loadevent)
+      resolve(foodList)
+    },1000)
+
     setTimeout(()=> {
       msgbox.classList.add('close')
       resolve(foodList)
-      }, 3000)
+
+    }, 3000)
   })
 }
 
-loadApi('https://the-birthday-cake-db.p.rapidapi.com/',options)
+loadApi('https://chinese-food-db.p.rapidapi.com/',options)
     .then(foodList =>showData(foodList))
 
 
@@ -183,3 +204,55 @@ function inputCheck(userinputs){
 }
 
 loginbtn.addEventListener('click',inputCheck)
+
+function loading(){
+  const circles = document.querySelectorAll('.circle')
+  let circle = 0
+
+  function circleChange(){
+    circles[circle].classList.add('circle-style')
+  }
+  function circlenoChange(){
+    circles[prevCircle].classList.remove('circle-style')
+  }
+
+  function loading(){
+    prevCircle = circle
+    circle ++
+    if(circle > circles.length -1){
+      circle =0
+    }
+    circleChange()
+    circlenoChange()
+    console.log(circle)
+  }
+
+loadevent = setInterval(loading, 500)
+}
+
+const menubtn = document.querySelector('.menubtn')
+const ul = document.querySelector('.ul')
+
+function openMenu(){
+  if(menubtn.classList.contains('show')){
+    ul.classList.add('visi')
+    ul.classList.remove('novisi')
+    menubtn.classList.add('close')
+    menubtn.classList.remove('show')
+    closeBtn.classList.remove('close')
+    closeBtn.classList.add('show')
+  }
+  else{
+    ul.classList.remove('visi')
+    ul.classList.add('novisi')
+    menubtn.classList.add('show')
+    menubtn.classList.remove('close')
+    closeBtn.classList.remove('show')
+    closeBtn.classList.add('close')
+  }
+}
+
+menubtn.addEventListener('click',openMenu)
+closeBtn.addEventListener('click',openMenu)
+
+
