@@ -280,6 +280,18 @@ function openMenu(){
 menubtn.addEventListener('click',openMenu)
 closeBtn.addEventListener('click',openMenu)
 
+//반응형때 닫은 ul 사이즈 늘어나면 다시 나타나기
+function resizeUl(){
+  const ul = document.querySelector('ul')
+  
+  if (window.innerWidth > 480){
+    ul.classList.remove('novisi')
+  }
+}
+
+window.addEventListener('resize',resizeUl)
+
+
 // 테마변경 -다크모드 /일반모드
 const mode = document.querySelector('.mode')
 const icons = mode.querySelectorAll('.icon')
