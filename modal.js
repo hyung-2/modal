@@ -5,9 +5,13 @@ const topBtn = document.querySelector('.totop')
 const nav = document.querySelector('nav')
 const navHeight = nav.clientHeight
 const closeBtn = document.querySelector('.closebtn')
+const closeModalBtn = document.querySelector('.closemodalbtn')
 const menuOne = document.querySelector('.menuone')
 const dropDown = document.querySelector('.dropdown')
+const viewCon = document.querySelector('.itemview-container')
 
+
+//모달창 열기
 function openModal () {
   if(button.innerText === `'Click!'`){
     modalWindow.classList.remove('close')
@@ -27,7 +31,9 @@ function openModal () {
     // button.innerText = `'Click!'`
   }
 }
-function closeModal() {
+
+// 모달창 닫기
+function closeModal(){  
   modalWindow.classList.remove('show')
   button.classList.remove('close')
   con.classList.remove('show')
@@ -38,10 +44,13 @@ function closeModal() {
   button.classList.add('show')
 }
 
+closeModalBtn.addEventListener('click',closeModal)
+
 // function toTop(){
 //   scrollTo(0,0)
 // }
 
+//nav창 아래로가면 보이고 제일 상단은 숨기기
 function scollP(){
   if(window.pageYOffset < 100){
     topBtn.classList.remove('show')
@@ -64,6 +73,7 @@ function navp(){
   }
 }
 
+//메뉴1버튼 드롭다운메뉴
 function dropOpen (e) {
   dropDown.classList.add('visi')
   dropDown.classList.remove('novisi')
@@ -78,7 +88,6 @@ function dropOpen (e) {
   }
 button.addEventListener('click', openModal)
 topBtn.addEventListener('click', function(){scrollTo(0,0)})
-closeBtn.addEventListener('click', closeModal)
 menuOne.addEventListener('click',dropOpen)
 document.addEventListener('click',dropClose)
 
@@ -87,12 +96,12 @@ window.addEventListener('scroll',navp)
 
 //2일차 - 가운데 api로 가져온 데이터 스크롤추가
 
-const url = 'https://chinese-food-db.p.rapidapi.com/';
+const url = 'https://the-mexican-food-db.p.rapidapi.com/';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'chinese-food-db.p.rapidapi.com'
+		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
 	}
 };
 const itemCon = document.querySelector('.item-container')
@@ -112,6 +121,7 @@ function scrollX (){
 
 window.addEventListener('scroll',scrollX)
 
+//api가져와서 화면에 띄우기
 function loadApi(url, options){
   return fetch(url, options)
           .then(response => response.json())
@@ -120,7 +130,8 @@ function loadApi(url, options){
 function showData (foodList){
   return new Promise (function(resolve, reject){
     console.log(foodList)
-    
+
+     //api 데이터 화면에 추가
     for(i=0; i<foodList.length; i++){
       let box = document.createElement('div')
       itemCon.append(box)
@@ -142,23 +153,34 @@ function showData (foodList){
       title.innerHTML = `${foodList[i].title}`
       textbox.append(title)
     }
+    //로드완료시 메세지띄우고 3초뒤에 닫기
     let msgbox = document.createElement('div')
     document.body.append(msgbox)
     msgbox.className = 'msgbox'
     msgbox.innerText = '컨텐츠 로드 완료 !'
     msgbox.classList.add('show')
 
-    const viewCon = document.querySelector('.itemview-container')
+    
     const viewBox = document.querySelector('.viewbox')
     const viewcontent = document.querySelector('.viewcontent')
-
+    const imgBoxs = document.querySelectorAll('.imgbox')
+    
+    //클릭한 메뉴 아래 컨테이너에 사진,정보 띄우기
     function moreImg (e){
-      let targetImg = viewBox.append(e.target)
+      if(e.target !== itemCon || e.target !== undefined || e.target !==null ){
+        console.log(e.target)
+        console.log(e.target.closest('.box').querySelector('.textbox h3').innerText)
+        viewBox.innerHTML = ''
+        viewcontent.innerText = ''
 
-   
+        viewBox.append(e.target.cloneNode(true))
+        viewcontent.append(e.target.closest('.box').querySelector('.textbox h3').innerText)
+      }
     }
 
-    itemCon.addEventListener('click',moreImg)
+    for (let imgBox of imgBoxs){
+      imgBox.addEventListener('click',moreImg)
+    }
 
     let loadingBox = document.querySelector('.loadingbox')
 
@@ -177,13 +199,14 @@ function showData (foodList){
   })
 }
 
-loadApi('https://chinese-food-db.p.rapidapi.com/',options)
+loadApi('https://the-mexican-food-db.p.rapidapi.com/',options)
     .then(foodList =>showData(foodList))
 
 
 const navbtn = document.querySelector('.navbtn')
 const hovertext = document.querySelector('.hovertext')
 
+//more버튼 호버
 function hoverEvent(){
   hovertext.classList.add('show')
 }
@@ -197,6 +220,7 @@ navbtn.addEventListener('mouseout',removeHoverEvnet)
 const userinputs = document.querySelectorAll('.user')
 const loginbtn = document.querySelector('.loginbtn')
 
+//인풋 빈칸금지
 function inputCheck(userinputs){
   if(userinputs.value === '' || userinputs.value === undefined || userinputs.value === null){
     return alert ('빈칸을 입력하세요')
@@ -204,7 +228,7 @@ function inputCheck(userinputs){
 }
 
 loginbtn.addEventListener('click',inputCheck)
-
+//로딩화면
 function loading(){
   const circles = document.querySelectorAll('.circle')
   let circle = 0
@@ -233,6 +257,7 @@ loadevent = setInterval(loading, 500)
 const menubtn = document.querySelector('.menubtn')
 const ul = document.querySelector('.ul')
 
+//반응형시 메뉴 여는버튼
 function openMenu(){
   if(menubtn.classList.contains('show')){
     ul.classList.add('visi')
@@ -255,4 +280,33 @@ function openMenu(){
 menubtn.addEventListener('click',openMenu)
 closeBtn.addEventListener('click',openMenu)
 
+// 테마변경 -다크모드 /일반모드
+const mode = document.querySelector('.mode')
+const icons = mode.querySelectorAll('.icon')
+mode.addEventListener('click',(event) => {
+  document.body.classList.toggle('bright')
+  nav.classList.toggle('bright')
+  itemCon.classList.toggle('bright')
+  viewCon.classList.toggle('bright')
+  ul.classList.toggle('bright')
 
+  for(let icon of icons){
+    icon.classList.contains('close') ? icon.classList.remove('close') : icon.classList.add('close')
+    }
+  
+})
+
+window.addEventListener('scroll',(event)=>{
+  viewConY = viewCon.getBoundingClientRect().top + window.pageYOffset
+  // console.log(viewConY)
+  // console.log(viewCon.getBoundingClientRect().top)
+  // console.log(nav.offsetHeight)
+  const viewcontent = document.querySelector('.viewcontent')
+  let clickItem = document.querySelector('.clickitembox')
+  if(viewCon.getBoundingClientRect().top > nav.offsetHeight+50 && viewcontent.innerText !==''){
+    clickItem.innerText = `${viewcontent.innerText}`
+    clickItem.classList.add('visi')
+  }else{
+    clickItem.classList.remove('visi')
+  }
+})
