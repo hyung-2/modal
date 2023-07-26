@@ -1,9 +1,11 @@
+$white : #fff;
+$dark : #333;
+
 @mixin pos ($p, $l, $t, $r, $b, $z){
   position: $p;
   left: $l; top: $t; right: $r; bottom: $b;
   z-index: $z;
 }  
-
 @mixin wh ($w, $h){
   width: $w; height: $h
 }  
@@ -21,24 +23,95 @@
   margin: $m;
   padding: $p;
 }
+@mixin flex ($j, $a){
+  display: flex;
+  justify-content: $j;
+  align-items: $a;
+}
 
+body.bright{
+  background-image: url(https://blog.kakaocdn.net/dn/HdJRr/btqEnIAGmbH/Bsuf1SBtz9rtoNqDaPKLo0/img.jpg);
+  background-size: cover;
+  *{
+    color: $dark;
+  }
+  header{
+    nav{
+      @include bgColor(255, 255, 255, 0.5, 0, 0, .5rem, $white);
+      ul{
+        
+        li{
+          a{
+            &:hover{
+              text-shadow: 0 0 5px $white;
+              @include bgColor(51, 51, 51, .3, 0, 0, 0.3rem, rgba(51, 51, 51, .5));
+            }
+          }
+          .dropdown{
+            @include bgColor(255, 255, 255, .3, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
+            a{
+              color: $dark;
+              &:hover{
+                text-shadow: 0 0 5px $dark;
+                @include bgColor(51, 51, 51, .3, 0, 0, 0.3rem, rgba(51, 51, 51, .5));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .modal-window{
+    h3{
+      text-shadow: 0 0 5px $dark;
+    }
+    form{
+      .loginbtn{
+        &:hover{
+          @include bgColor(51, 51, 51, 1, 1px, 1px, 10px, $dark);
+          color: $white;
+        }
+      }
+    }
+  }
+  button:not(.closebtn, .menubtn){
+    border: 3px solid $dark;
+    box-shadow: 1px 1px 20px $dark;  
+  }
+  .totop{
+    background-color: $dark;
+    span, p{
+      color: $white; }
+  }
+  nav.bright, .item-container.bright, .itemview-container.bright{
+    background-color: transparent;
+    box-shadow: 0 0 .5rem $dark;
+    color: $dark;
+    *{
+      color: $dark;
+    }
+  }
+  .msgbox{
+    @include bgColor(51, 51, 51, 1, 1px, 1px, 10px, $dark);
+    color: $white;}
+  .hovertext{
+    @include bgColor(51, 51, 51, .5, 0, 0, 18px, $dark);
+    color: $white;
+  }
+}
 html {
   scroll-behavior: smooth;
 }
 header {
-  
-
   nav{
     height: 50px;
     @include mp(0, 0);
-    @include bgColor(0, 0, 0, 0.7, 0, 0, .5rem, #fff);
-    @include pos(fixed, 0, 0, 0, 0, 1);
+    @include bgColor(0, 0, 0, 0.7, 0, 0, .5rem, $white);
+    @include pos(fixed, 0, 0, 0, 0, 2);
     ul{
       @include mp(0 , 15px 0);
       visibility: visible;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
+      @include flex(flex-start, flex-start);
       li{
         display: relative;
         list-style: none;
@@ -46,26 +119,24 @@ header {
         a{
           @include mp(0, 10px);
           text-decoration: none;
-          color: #fff;
+          color: $white;
           font-weight: bold;
           &:hover{
-            text-shadow: 0 0 5px #fff;
+            text-shadow: 0 0 5px $white;
             @include bgColor(255, 255, 255, .3, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
           }
         }
         .dropdown{
-          display: flex;
+          @include flex(flex-start, flex-start);
           flex-direction: column;
-          justify-content: flex-start;
-          align-items: flex-start;
           transition: all .4s ;
           @include mp(4px 0, 0);
           @include bgColor(0, 0, 0, .7, 0, 0, 0, 0);
           a{
             @include mp(0, 8px 10px);
-            color: #fff;
+            color: $white;
             &:hover{
-              text-shadow: 0 0 5px #fff;
+              text-shadow: 0 0 5px $white;
               @include bgColor(255, 255, 255, .3, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
             }
           }
@@ -75,7 +146,21 @@ header {
   }
 }
 .menubtn{
-  display: none;
+  visibility: hidden;
+}
+
+.mode{
+  color: $white;
+  @include pos(fixed, null, 52px, 20px, null, 8);
+  cursor: pointer;
+  @include wh(48px, 48px);
+  .material-symbols-outlined{
+    font-size: 3rem;
+    position: absolute;
+    &:first-child{
+      fill: 1;
+    }
+  }
 }
 
 .navbtn{
@@ -84,7 +169,7 @@ header {
   @include btnStyle(25px, 3px solid aquamarine);
   @include mp(null, 10px 25px);
   @include bgColor(0, 0, 0, 0, 1px, 1px, 20px, aquamarine);
-  color: #fff;
+  color: $white;
   transition: .2s;
 }
 .hovertext{
@@ -93,7 +178,7 @@ header {
   text-align: center;
   line-height: 30px;
   @include mp(0, 10px);
-  color: #fff;
+  color: $white;
   @include pos(absolute, null, 0, 135px, null, 1);
   border-radius:50px;
   display: none;
@@ -106,18 +191,19 @@ body{
   background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20230323/pngtree-nebula-blue-moon-stars-twinkling-background-image_2051892.jpg);
   background-size: cover;
   min-height: 300vh;
+  transition: .2s;
   &::-webkit-scrollbar {
     display: none;
   }  
 
 }  
 .openbtn{
-  @include pos (fixed, null, 55px, 34px, null, 5);
+  @include pos (fixed, null, 55px, 85px, null, 5);
   // transform: translate(-50%,-50%);
   @include btnStyle(25px, 3px solid aquamarine);
   @include mp(null, 10px 25px);
   @include bgColor(0, 0, 0, 0, 1px, 1px, 20px, aquamarine);
-  color: #fff;
+  color: $white;
   transition: .2s;
 }  
 .container {
@@ -135,27 +221,30 @@ body{
   border-radius: .5rem;
   backdrop-filter: blur(5px);
   text-align: center;
-  color:  #fff;
+  color:  $white;
   display: none;
   
   h3{
     @include mp(10px 0, 0);
-    text-shadow: 0 0 5px #fff;
+    text-shadow: 0 0 5px $white;
     font-size: 4rem;
   }
   // p{
   //   @include mp(null, 0px 40px);
   // }
-
+  .closemodalbtn{
+    background: none;
+    @include btnStyle(0, none);
+    @include pos(fixed, null, 10px, 10px, null, 20);
+    color:  $white;
   }
+  
   form{
     position: relative;
-    display: flex;
+    @include flex(center, center);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     div{
-      display: flex;
+      @include flex(null, null);
       @include wh(auto, 50px);
       label{
         font-size: 1.5rem;
@@ -170,7 +259,7 @@ body{
         background: transparent;
         outline: none;
         font-size: 1.5rem;
-        color:#fff;
+        color:$white;
         flex: 3;
         border-bottom: 1px solid rgba(0,0,0,0.5);
         @include wh(250px, auto)
@@ -185,11 +274,12 @@ body{
       }
     }
   }
+}
 .closebtn {
   background: none;
   @include btnStyle(0, none);
-  @include pos(fixed, null, 10px, 10px, null, 5);
-  color:  #fff;
+  @include pos(fixed, null, 10px, 10px, null, 20);
+  color:  $white;
 } 
 .totop{
   @include wh(50px, 50px);
@@ -210,9 +300,9 @@ body{
   @include bgColor(255, 255, 255, .3, 0, 0, 1rem, aquamarine);
   @include wh(80%, 250px);
   @include mp(50px auto, null);
-  @include pos (fixed, 50%, 35%, null, null, 1);
+  @include pos (absolute, 50%, 28%, null, null, 1);
   transform: translate(-50%, -50%);
-  display: flex;
+  @include flex(null, null);
   overflow-x: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -224,7 +314,7 @@ body{
   @include wh(200px, 100%);
   margin-right: 10px;
   cursor: pointer;
-  display: flex;
+  @include flex(null, null);
   flex-direction: column;
   flex: 1 0 auto;
   .imgbox{
@@ -239,7 +329,7 @@ body{
     @include bgColor(0, 0, 0, .5, 0, 0, 0, 0);
     overflow: hidden;
     h3{
-      color: #fff;
+      color: $white;
       font-size: 0.8rem;
       @include mp(0, 8px 11px);
       text-align:center;
@@ -258,61 +348,82 @@ body{
   font-weight: bold;
   border-radius: 10px;
   
+}  
+.itemview-container{
+  @include bgColor(0, 0, 0, .5, 0, 0, 1rem, aquamarine);
+  @include wh(30%, 300px);
+  @include mp(50px auto, null);
+  @include pos (absolute, 50%, 65%, null, null, 1);
+  transform: translate(-50%, -50%);
+  @include flex(null, null);
+  flex-direction: column;
 }
 
+
 .viewbox{
-  width: 50%;
+  height: 75%;
+  width: 100%;
+  text-align: center;
   img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-}
+    object-position: center;
+  }  
+}  
 .viewcontent{
-  width: 50%;
-}
+  text-align: center;
+  height: 25%;
+  width: 100%;
+  color: $white;
+  font-weight: bold;
+  padding: 20px 0;
+}  
 
 .loadingbox {
   display: block;
   @include bgColor(0, 0, 0, 0.9, 0, 0, 0, 0);
   @include pos (fixed, 0, 0, null, null, 10);
   @include wh(100%, 100vh);
-  display: flex;
+  @include flex(center, center);
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
+  color: $white;
   font-size: 5rem;
-  
+  p{
+  font-family: 'Shadows Into Light', cursive;
+  letter-spacing: 7px;
+  padding-left: 30px;
+  text-align: center
+  }
   .circle-con{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex(center, center);
     @include pos(fixed, 47%, 42%, null, null, null);
     transform: translate(-50%, -50%);
-  }
-}
+  }  
+}  
 .circle{
-  background-color: #fff;
+  background-color: $white;
   @include wh(18px, 18px);
   border-radius: 50%;
   margin: 0 11px;
-}
+}  
 .circle-style{
   @include bgColor(127, 255, 212, 1, 1px, 1px, 10px, aquamarine);
+}  
+
+.clickitembox{
+  @include bgColor(127, 255, 212, 1, 1px, 1px, 10px, aquamarine);
+  @include wh(200px, auto);
+  @include pos(fixed, 20px, null, null, 100px, 2);
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  color: #000;
+  visibility: hidden;
+  font-size: 1rem;
+  line-height: 20px;
+  padding: 10px;
 }
-
-.itemview-container{
-  @include bgColor(255, 255, 255, .3, 0, 0, 1rem, aquamarine);
-  @include wh(70%, 285px);
-  @include mp(50px auto, null);
-  @include pos (fixed, 50%, 73%, null, null, 1);
-  transform: translate(-50%, -50%);
-  display: flex;
-}
-
-
-
 
 
 
@@ -340,26 +451,32 @@ body{
 @media (max-width:480px){
   .navbtn{
     scale: 0.8;
-    right: -45px;
-    top: -179px;
+    right: 107px;
+    top: -137px;
   }
   .hovertext{
-    top: -182px;
-    right: 46px;
+    top: -92px;
+    right: 37px;
+    scale: .8;
   }
   header nav{ 
+    visibility: hidden;
     .closebtn{
+      visibility: visible;
       .material-symbols-outlined{
         font-size: 2rem;
       }
     }
     ul {
-      visibility: hidden;
-      flex-direction: column;
-      @include bgColor(0, 0, 0, 0.7, 0, 0, .5rem, #fff);
+      &.bright{
+        @include bgColor(255, 255, 255, 0.5, 0, 0, .5rem, $dark);}
+        visibility: hidden;
+        flex-direction: column;
+        @include bgColor(0, 0, 0, 0.7, 0, 0, .5rem, $white);
+
 
       li{
-        @include pos(relative, 48%, 35px, null, null, null);
+        @include pos(relative, 48%, 30%, null, null, null);
         transform: translate(-50%,0);
         margin: 10px;
         .dropdown{
@@ -377,7 +494,7 @@ body{
     }
   }
   .openbtn{
-    top: 8%; right: -8%;
+    top: 11%; right: -10%;
     transform: translate(-50%, 0);
     @include wh(100px, auto)
   }
@@ -403,12 +520,13 @@ body{
     }
   }
   .menubtn{
+    visibility: visible;
     @include pos(relative, 88%, -326%, null, null, 0);
     background: transparent;
     border: none;
     cursor: pointer;
     .material-symbols-outlined{
-      color: #fff;
+      color: $white;
       font-size: 2rem;
     }
   }
