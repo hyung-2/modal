@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>모달창 만들기</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="modal.css">
 </head>
 <body>
@@ -16,7 +19,7 @@
       <div class="circle"></div>
       <div class="circle"></div>
     </div>
-    Loading ...
+    <p>Loading ...</p>
   </div>
   <header>
     <nav class="close">
@@ -40,13 +43,17 @@
       <button type="button" class="closebtn close"><span class="material-symbols-outlined">close</span></button>
     </nav>
   </header>
+  <div class="mode">
+    <span class="material-symbols-outlined icon" style="fill: 1;">toggle_on</span>
+    <span class="material-symbols-outlined icon close">toggle_off</span>
+  </div>
   <button class="openbtn" type="button">'Click!'</button>
   <div class="container">
     <div class="modal-window">
-      <button type="button" class="closebtn">
+      <button type="button" class="closemodalbtn">
         <span class="material-symbols-outlined">close</span>
       </button>
-      <form action="/">
+      <form>
         <h3>로그인</h3>
         <div class="id">
             <label for="username">ID</label>
@@ -72,6 +79,7 @@
     <span class="material-symbols-outlined">arrow_upward</span>
       <p>Top</p>
   </button>
+  <div class="clickitembox"></div>
   <script src="modal.js"></script>
 </body>
 </html>

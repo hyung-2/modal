@@ -74,7 +74,7 @@ body.bright{
       }
     }
   }
-  button:not(.closebtn, .menubtn){
+  button:not(.closebtn, .menubtn, .closemodalbtn){
     border: 3px solid $dark;
     box-shadow: 1px 1px 20px $dark;  
   }
@@ -90,6 +90,9 @@ body.bright{
     *{
       color: $dark;
     }
+  }
+  .textbox{
+    background-color: 255,255,255,.5
   }
   .msgbox{
     @include bgColor(51, 51, 51, 1, 1px, 1px, 10px, $dark);
@@ -300,7 +303,7 @@ body{
   @include bgColor(255, 255, 255, .3, 0, 0, 1rem, aquamarine);
   @include wh(80%, 250px);
   @include mp(50px auto, null);
-  @include pos (absolute, 50%, 28%, null, null, 1);
+  @include pos (fixed, 50%, 28%, null, null, 1);
   transform: translate(-50%, -50%);
   @include flex(null, null);
   overflow-x: auto;
@@ -326,7 +329,7 @@ body{
   }
   .textbox{
     @include wh(100%, 20%);
-    @include bgColor(0, 0, 0, .5, 0, 0, 0, 0);
+    @include bgColor(0, 0, 0, .3, 0, 0, 0, 0);
     overflow: hidden;
     h3{
       color: $white;
@@ -351,10 +354,13 @@ body{
 }  
 .itemview-container{
   @include bgColor(0, 0, 0, .5, 0, 0, 1rem, aquamarine);
-  @include wh(30%, 300px);
+  @include wh(30%, auto);
   @include mp(50px auto, null);
-  @include pos (absolute, 50%, 65%, null, null, 1);
+  @include pos (absolute, 50%, 70%, null, null, 0);
   transform: translate(-50%, -50%);
+  // 아래로 계속 늘어나게 장난치기
+  // @include pos (absolute, 50%, 430px, null, null, 0);
+  // transform: translate(-50%, 0%);
   @include flex(null, null);
   flex-direction: column;
 }
@@ -393,7 +399,7 @@ body{
   font-family: 'Shadows Into Light', cursive;
   letter-spacing: 7px;
   padding-left: 30px;
-  text-align: center
+  text-align: cen
   }
   .circle-con{
     @include flex(center, center);

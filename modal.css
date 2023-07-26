@@ -1,3 +1,71 @@
+body.bright {
+  background-image: url(https://blog.kakaocdn.net/dn/HdJRr/btqEnIAGmbH/Bsuf1SBtz9rtoNqDaPKLo0/img.jpg);
+  background-size: cover;
+}
+body.bright * {
+  color: #333;
+}
+body.bright header nav {
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0.5rem #fff;
+}
+body.bright header nav ul li a:hover {
+  text-shadow: 0 0 5px #fff;
+  background-color: rgba(51, 51, 51, 0.3);
+  box-shadow: 0 0 0.3rem rgba(51, 51, 51, 0.5);
+}
+body.bright header nav ul li .dropdown {
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0.3rem rgba(255, 255, 255, 0.5);
+}
+body.bright header nav ul li .dropdown a {
+  color: #333;
+}
+body.bright header nav ul li .dropdown a:hover {
+  text-shadow: 0 0 5px #333;
+  background-color: rgba(51, 51, 51, 0.3);
+  box-shadow: 0 0 0.3rem rgba(51, 51, 51, 0.5);
+}
+body.bright .modal-window h3 {
+  text-shadow: 0 0 5px #333;
+}
+body.bright .modal-window form .loginbtn:hover {
+  background-color: rgb(51, 51, 51);
+  box-shadow: 1px 1px 10px #333;
+  color: #fff;
+}
+body.bright button:not(.closebtn, .menubtn, .closemodalbtn) {
+  border: 3px solid #333;
+  box-shadow: 1px 1px 20px #333;
+}
+body.bright .totop {
+  background-color: #333;
+}
+body.bright .totop span, body.bright .totop p {
+  color: #fff;
+}
+body.bright nav.bright, body.bright .item-container.bright, body.bright .itemview-container.bright {
+  background-color: transparent;
+  box-shadow: 0 0 0.5rem #333;
+  color: #333;
+}
+body.bright nav.bright *, body.bright .item-container.bright *, body.bright .itemview-container.bright * {
+  color: #333;
+}
+body.bright .textbox {
+  background-color: 255, 255, 255, 0.5;
+}
+body.bright .msgbox {
+  background-color: rgb(51, 51, 51);
+  box-shadow: 1px 1px 10px #333;
+  color: #fff;
+}
+body.bright .hovertext {
+  background-color: rgba(51, 51, 51, 0.5);
+  box-shadow: 0 0 18px #333;
+  color: #fff;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -13,7 +81,7 @@ header nav {
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 2;
 }
 header nav ul {
   margin: 0;
@@ -43,9 +111,9 @@ header nav ul li a:hover {
 }
 header nav ul li .dropdown {
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-direction: column;
   transition: all 0.4s;
   margin: 4px 0;
   padding: 0;
@@ -64,7 +132,25 @@ header nav ul li .dropdown a:hover {
 }
 
 .menubtn {
-  display: none;
+  visibility: hidden;
+}
+
+.mode {
+  color: #fff;
+  position: fixed;
+  top: 52px;
+  right: 20px;
+  z-index: 8;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+}
+.mode .material-symbols-outlined {
+  font-size: 3rem;
+  position: absolute;
+}
+.mode .material-symbols-outlined:first-child {
+  fill: 1;
 }
 
 .navbtn {
@@ -109,6 +195,7 @@ body {
   background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20230323/pngtree-nebula-blue-moon-stars-twinkling-background-image_2051892.jpg);
   background-size: cover;
   min-height: 300vh;
+  transition: 0.2s;
 }
 body::-webkit-scrollbar {
   display: none;
@@ -117,7 +204,7 @@ body::-webkit-scrollbar {
 .openbtn {
   position: fixed;
   top: 55px;
-  right: 34px;
+  right: 85px;
   z-index: 5;
   border-radius: 25px;
   border: 3px solid aquamarine;
@@ -164,20 +251,31 @@ body::-webkit-scrollbar {
   text-shadow: 0 0 5px #fff;
   font-size: 4rem;
 }
-
-form {
+.modal-window .closemodalbtn {
+  background: none;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  color: #fff;
+}
+.modal-window form {
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
-form div {
+.modal-window form div {
   display: flex;
   width: auto;
   height: 50px;
 }
-form div label {
+.modal-window form div label {
   font-size: 1.5rem;
   text-align: right;
   flex: 1;
@@ -186,7 +284,7 @@ form div label {
   width: 40px;
   height: auto;
 }
-form div input {
+.modal-window form div input {
   border: none;
   background: transparent;
   outline: none;
@@ -197,7 +295,7 @@ form div input {
   width: 250px;
   height: auto;
 }
-form .loginbtn {
+.modal-window form .loginbtn {
   margin: auto;
   padding: 10px;
   position: fixed;
@@ -207,7 +305,7 @@ form .loginbtn {
   cursor: pointer;
   font-weight: bold;
 }
-form .loginbtn:hover {
+.modal-window form .loginbtn:hover {
   background-color: rgb(127, 255, 212);
   box-shadow: 1px 1px 10px aquamarine;
 }
@@ -221,7 +319,7 @@ form .loginbtn:hover {
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 5;
+  z-index: 20;
   color: #fff;
 }
 
@@ -257,7 +355,7 @@ form .loginbtn:hover {
   margin: 50px auto;
   position: fixed;
   left: 50%;
-  top: 35%;
+  top: 28%;
   z-index: 1;
   transform: translate(-50%, -50%);
   display: flex;
@@ -291,7 +389,7 @@ form .loginbtn:hover {
 .box .textbox {
   width: 100%;
   height: 20%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 0 0;
   overflow: hidden;
 }
@@ -319,18 +417,42 @@ form .loginbtn:hover {
   border-radius: 10px;
 }
 
+.itemview-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1rem aquamarine;
+  width: 30%;
+  height: auto;
+  margin: 50px auto;
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+
 .viewbox {
-  width: 50%;
+  height: 75%;
+  width: 100%;
+  text-align: center;
 }
 .viewbox img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .viewcontent {
-  width: 50%;
+  text-align: center;
+  height: 25%;
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+  padding: 20px 0;
 }
 
 .loadingbox {
@@ -344,11 +466,17 @@ form .loginbtn:hover {
   width: 100%;
   height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   color: #fff;
   font-size: 5rem;
+}
+.loadingbox p {
+  font-family: "Shadows Into Light", cursive;
+  letter-spacing: 7px;
+  padding-left: 30px;
+  text-align: cen;
 }
 .loadingbox .circle-con {
   display: flex;
@@ -373,18 +501,23 @@ form .loginbtn:hover {
   box-shadow: 1px 1px 10px aquamarine;
 }
 
-.itemview-container {
-  background-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 1rem aquamarine;
-  width: 70%;
-  height: 285px;
-  margin: 50px auto;
+.clickitembox {
+  background-color: rgb(127, 255, 212);
+  box-shadow: 1px 1px 10px aquamarine;
+  width: 200px;
+  height: auto;
   position: fixed;
-  left: 50%;
-  top: 73%;
-  z-index: 1;
-  transform: translate(-50%, -50%);
-  display: flex;
+  left: 20px;
+  bottom: 100px;
+  z-index: 2;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  color: #000;
+  visibility: hidden;
+  font-size: 1rem;
+  line-height: 20px;
+  padding: 10px;
 }
 
 .show {
@@ -411,12 +544,19 @@ form .loginbtn:hover {
 @media (max-width: 480px) {
   .navbtn {
     scale: 0.8;
-    right: -45px;
-    top: -179px;
+    right: 107px;
+    top: -137px;
   }
   .hovertext {
-    top: -182px;
-    right: 46px;
+    top: -92px;
+    right: 37px;
+    scale: 0.8;
+  }
+  header nav {
+    visibility: hidden;
+  }
+  header nav .closebtn {
+    visibility: visible;
   }
   header nav .closebtn .material-symbols-outlined {
     font-size: 2rem;
@@ -427,10 +567,14 @@ form .loginbtn:hover {
     background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0 0 0.5rem #fff;
   }
+  header nav ul.bright {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0.5rem #333;
+  }
   header nav ul li {
     position: relative;
     left: 48%;
-    top: 35px;
+    top: 30%;
     transform: translate(-50%, 0);
     margin: 10px;
   }
@@ -452,8 +596,8 @@ form .loginbtn:hover {
     top: -9px;
   }
   .openbtn {
-    top: 8%;
-    right: -8%;
+    top: 11%;
+    right: -10%;
     transform: translate(-50%, 0);
     width: 100px;
     height: auto;
@@ -478,6 +622,7 @@ form .loginbtn:hover {
     margin: 10px;
   }
   .menubtn {
+    visibility: visible;
     position: relative;
     left: 88%;
     top: -326%;

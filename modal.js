@@ -10,7 +10,6 @@ const menuOne = document.querySelector('.menuone')
 const dropDown = document.querySelector('.dropdown')
 const viewCon = document.querySelector('.itemview-container')
 
-
 //모달창 열기
 function openModal () {
   if(button.innerText === `'Click!'`){
@@ -20,14 +19,14 @@ function openModal () {
     button.innerText = '닫기'
     button.classList.add('close')
   }
-  else{
+  // else{
     // modalWindow.classList.remove('show')
     // con.classList.remove('show')
     // modalWindow.classList.add('close')
     // con.classList.add('close')
     // document.body.style.overflow = 'auto'
     // button.innerText = `'Click!'`
-  }
+  // }
 }
 
 // 모달창 닫기
@@ -41,10 +40,6 @@ function closeModal(){
 
 closeModalBtn.addEventListener('click',closeModal)
 
-// function toTop(){
-//   scrollTo(0,0)
-// }
-
 //스크롤 조금이라도 아래로가면 to top 버튼 생성
 function scollP(){
   if(window.pageYOffset < 100){
@@ -53,6 +48,11 @@ function scollP(){
     topBtn.classList.remove('close')
   }
 }
+window.addEventListener('scroll',scollP)
+
+//to top 버튼 누르면 상단으로
+topBtn.addEventListener('click', function(){scrollTo(0,0)})
+
 //nav창 아래로가면 보이고 제일 상단은 숨기기
 function navp(){
   // console.log(navHeight)
@@ -64,46 +64,35 @@ function navp(){
     nav.classList.add('close')
   }
 }
+window.addEventListener('scroll',navp)
 
 //메뉴1버튼 드롭다운메뉴
 function dropOpen (e) {
-  dropDown.classList.add('visi')
   dropDown.classList.remove('novisi')
   e.stopPropagation()
 }
   function dropClose(e){
-    if(dropDown.classList.contains('visi') && !dropDown.contains(e.target)){
+    if(!dropDown.classList.contains('visi') && !dropDown.contains(e.target)){
+      console.log(e.target)
       // console.log(dropDown.contains(e.target))
-      dropDown.classList.remove('visi')
       dropDown.classList.add('novisi')
     }
   }
 button.addEventListener('click', openModal)
-topBtn.addEventListener('click', function(){scrollTo(0,0)})
 menuOne.addEventListener('click',dropOpen)
 document.addEventListener('click',dropClose)
 
-window.addEventListener('scroll',scollP)
-window.addEventListener('scroll',navp)
 
 //2일차 - 가운데 api로 가져온 데이터 스크롤추가
 
-const url = 'https://the-birthday-cake-db.p.rapidapi.com/'
-// 'https://the-mexican-food-db.p.rapidapi.com/';
+const url ='https://the-mexican-food-db.p.rapidapi.com/';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'the-birthday-cake-db.p.rapidapi.com'
+		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
 	}
 };
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-// 		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
-// 	}
-// };
 const itemCon = document.querySelector('.item-container')
 const clientHeight = document.documentElement.clientHeight
 const scrollHeight = Math.max(
@@ -174,7 +163,10 @@ function showData (foodList){
         viewcontent.innerText = ''
 
         viewBox.append(e.target.cloneNode(true))
-        viewcontent.append(e.target.closest('.box').querySelector('.textbox h3').innerText)
+        viewcontent.append(e.target.closest('.box').querySelector('.textbox h3').innerText)  
+        
+        // viewBox.append(e.target.closest('.box').querySelector('.textbox h3').innerText)
+        
       }
     }
 
@@ -227,7 +219,7 @@ function showData (foodList){
   })
 }
 
-loadApi('https://the-birthday-cake-db.p.rapidapi.com/',options)
+loadApi('https://the-mexican-food-db.p.rapidapi.com/',options)
     .then(foodList =>showData(foodList))
 
 
@@ -309,13 +301,12 @@ mode.addEventListener('click',(event) => {
   for(let icon of icons){
     icon.classList.contains('close') ? icon.classList.remove('close') : icon.classList.add('close')
     }
-  
 })
 //클릭한 아이템의 이름 왼쪽아래에 창 띄우기
 window.addEventListener('scroll',(event)=>{
   const viewcontent = document.querySelector('.viewcontent')
   let clickItem = document.querySelector('.clickitembox')
-  if(viewCon.getBoundingClientRect().top > (nav.offsetHeight-viewCon.offsetHeight) && viewcontent.innerText !==''){
+  if(viewCon.getBoundingClientRect().top > nav.offsetHeight+50 && viewcontent.innerText !==''){
     clickItem.innerText = `${viewcontent.innerText}`
     clickItem.classList.add('visi')
   }else{
