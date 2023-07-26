@@ -14,8 +14,6 @@ const viewCon = document.querySelector('.itemview-container')
 //모달창 열기
 function openModal () {
   if(button.innerText === `'Click!'`){
-    modalWindow.classList.remove('close')
-    con.classList.remove('close')
     modalWindow.classList.add('show')
     con.classList.add('show')
     document.body.style.overflow = 'hidden'
@@ -37,11 +35,8 @@ function closeModal(){
   modalWindow.classList.remove('show')
   button.classList.remove('close')
   con.classList.remove('show')
-  modalWindow.classList.add('close')
-  con.classList.add('close')
   document.body.style.overflow = 'auto'
   button.innerText = `'Click!'`
-  button.classList.add('show')
 }
 
 closeModalBtn.addEventListener('click',closeModal)
@@ -50,25 +45,22 @@ closeModalBtn.addEventListener('click',closeModal)
 //   scrollTo(0,0)
 // }
 
-//nav창 아래로가면 보이고 제일 상단은 숨기기
+//스크롤 조금이라도 아래로가면 to top 버튼 생성
 function scollP(){
   if(window.pageYOffset < 100){
-    topBtn.classList.remove('show')
     topBtn.classList.add('close')
   }else{
     topBtn.classList.remove('close')
-    topBtn.classList.add('show')
   }
 }
+//nav창 아래로가면 보이고 제일 상단은 숨기기
 function navp(){
   // console.log(navHeight)
   // console.log(window.pageYOffset)
   if(window.pageYOffset > navHeight){
     nav.classList.remove('close')
-    nav.classList.add('show')
   }
   else{
-    nav.classList.remove('show')
     nav.classList.add('close')
   }
 }
@@ -96,14 +88,22 @@ window.addEventListener('scroll',navp)
 
 //2일차 - 가운데 api로 가져온 데이터 스크롤추가
 
-const url = 'https://the-mexican-food-db.p.rapidapi.com/';
+const url = 'https://the-birthday-cake-db.p.rapidapi.com/'
+// 'https://the-mexican-food-db.p.rapidapi.com/';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
+		'X-RapidAPI-Host': 'the-birthday-cake-db.p.rapidapi.com'
 	}
 };
+// const options = {
+// 	method: 'GET',
+// 	headers: {
+// 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
+// 		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
+// 	}
+// };
 const itemCon = document.querySelector('.item-container')
 const clientHeight = document.documentElement.clientHeight
 const scrollHeight = Math.max(
@@ -112,7 +112,7 @@ const scrollHeight = Math.max(
   document.body.clientHeight, document.documentElement.clientHeight
 );
 
-
+//아래로 스크롤시 container 가로로 같이 스크롤
 function scrollX (){
 //  console.log(window.pageYOffset / (scrollHeight - clientHeight))
  itemCon.scrollLeft = window.pageYOffset / (scrollHeight - clientHeight) * ( itemCon.scrollWidth - itemCon.clientWidth)
@@ -168,7 +168,7 @@ function showData (foodList){
     //클릭한 메뉴 아래 컨테이너에 사진,정보 띄우기
     function moreImg (e){
       if(e.target !== itemCon || e.target !== undefined || e.target !==null ){
-        console.log(e.target)
+        // console.log(e.target)
         console.log(e.target.closest('.box').querySelector('.textbox h3').innerText)
         viewBox.innerHTML = ''
         viewcontent.innerText = ''
@@ -182,9 +182,37 @@ function showData (foodList){
       imgBox.addEventListener('click',moreImg)
     }
 
+    //로딩화면
+    function loading(){
+      const circles = document.querySelectorAll('.circle')
+      let circle = 0
+      
+      function circleChange(){
+        circles[circle].classList.add('circle-style')
+      }
+      function circlenoChange(){
+        circles[prevCircle].classList.remove('circle-style')
+      }
+      
+      function loadinging(){
+        prevCircle = circle
+        circle ++
+        if(circle > circles.length -1){
+          circle =0
+        }
+        circleChange()
+        circlenoChange()
+        console.log(circle)
+      }
+      
+      loadevent = setInterval(loadinging, 300)
+    }
+    
+    //api가져오는동안 로딩창띄우기
     let loadingBox = document.querySelector('.loadingbox')
 
     loading()
+
     setTimeout(()=>{
       loadingBox.classList.add('close')
       clearInterval(loadevent)
@@ -199,7 +227,7 @@ function showData (foodList){
   })
 }
 
-loadApi('https://the-mexican-food-db.p.rapidapi.com/',options)
+loadApi('https://the-birthday-cake-db.p.rapidapi.com/',options)
     .then(foodList =>showData(foodList))
 
 
@@ -223,36 +251,16 @@ const loginbtn = document.querySelector('.loginbtn')
 //인풋 빈칸금지
 function inputCheck(userinputs){
   if(userinputs.value === '' || userinputs.value === undefined || userinputs.value === null){
-    return alert ('빈칸을 입력하세요')
+    alert ('빈칸을 입력하세요')
+    userinputs.preventDefault(); //새로고침 방지
+    return false
+  }else{
+    return true
   }
 }
 
 loginbtn.addEventListener('click',inputCheck)
-//로딩화면
-function loading(){
-  const circles = document.querySelectorAll('.circle')
-  let circle = 0
 
-  function circleChange(){
-    circles[circle].classList.add('circle-style')
-  }
-  function circlenoChange(){
-    circles[prevCircle].classList.remove('circle-style')
-  }
-
-  function loading(){
-    prevCircle = circle
-    circle ++
-    if(circle > circles.length -1){
-      circle =0
-    }
-    circleChange()
-    circlenoChange()
-    console.log(circle)
-  }
-
-loadevent = setInterval(loading, 500)
-}
 
 const menubtn = document.querySelector('.menubtn')
 const ul = document.querySelector('.ul')
@@ -261,18 +269,14 @@ const ul = document.querySelector('.ul')
 function openMenu(){
   if(menubtn.classList.contains('show')){
     ul.classList.add('visi')
-    ul.classList.remove('novisi')
     menubtn.classList.add('close')
     menubtn.classList.remove('show')
     closeBtn.classList.remove('close')
-    closeBtn.classList.add('show')
   }
   else{
     ul.classList.remove('visi')
-    ul.classList.add('novisi')
     menubtn.classList.add('show')
     menubtn.classList.remove('close')
-    closeBtn.classList.remove('show')
     closeBtn.classList.add('close')
   }
 }
@@ -307,10 +311,8 @@ mode.addEventListener('click',(event) => {
     }
   
 })
-
+//클릭한 아이템의 이름 왼쪽아래에 창 띄우기
 window.addEventListener('scroll',(event)=>{
-  viewConY = viewCon.getBoundingClientRect().top + window.pageYOffset
-
   const viewcontent = document.querySelector('.viewcontent')
   let clickItem = document.querySelector('.clickitembox')
   if(viewCon.getBoundingClientRect().top > (nav.offsetHeight-viewCon.offsetHeight) && viewcontent.innerText !==''){
