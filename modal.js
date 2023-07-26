@@ -310,12 +310,10 @@ mode.addEventListener('click',(event) => {
 
 window.addEventListener('scroll',(event)=>{
   viewConY = viewCon.getBoundingClientRect().top + window.pageYOffset
-  // console.log(viewConY)
-  // console.log(viewCon.getBoundingClientRect().top)
-  // console.log(nav.offsetHeight)
+
   const viewcontent = document.querySelector('.viewcontent')
   let clickItem = document.querySelector('.clickitembox')
-  if(viewCon.getBoundingClientRect().top > nav.offsetHeight+50 && viewcontent.innerText !==''){
+  if(viewCon.getBoundingClientRect().top > (nav.offsetHeight-viewCon.offsetHeight) && viewcontent.innerText !==''){
     clickItem.innerText = `${viewcontent.innerText}`
     clickItem.classList.add('visi')
   }else{
