@@ -354,36 +354,33 @@ body{
 }  
 .itemview-container{
   @include bgColor(0, 0, 0, .5, 0, 0, 1rem, aquamarine);
-  @include wh(30%, auto);
-  @include mp(50px auto, null);
+  @include wh(50%, 250px);
+  @include mp(auto, null);
   @include pos (absolute, 50%, 70%, null, null, 0);
   transform: translate(-50%, -50%);
+  @include flex(null, null);
   // 아래로 계속 늘어나게 장난치기
   // @include pos (absolute, 50%, 430px, null, null, 0);
   // transform: translate(-50%, 0%);
-  @include flex(null, null);
-  flex-direction: column;
 }
 
 
 .viewbox{
-  height: 75%;
-  width: 100%;
+  @include wh(auto, 100%);
   text-align: center;
   img{
-    width: 100%;
-    height: 100%;
+    @include wh(100%, 100%);
     object-fit: cover;
     object-position: center;
   }  
 }  
 .viewcontent{
   text-align: center;
-  height: 25%;
-  width: 100%;
+  @include wh(50%, 100%);
   color: $white;
   font-weight: bold;
-  padding: 20px 0;
+  padding: 0 25px;
+  padding-top: 100px;
 }  
 
 .loadingbox {
@@ -429,6 +426,42 @@ body{
   font-size: 1rem;
   line-height: 20px;
   padding: 10px;
+}
+
+.item-card-container{
+  @include wh(80%, null);
+  @include mp(auto, null);
+  @include pos (absolute, 10%, 100%, null, null, 0);
+  @include flex(null, null);
+  flex-wrap: wrap;
+  .card-box{
+    @include bgColor(0, 0, 0, .5, 0, 0, 1rem, aquamarine);
+    @include flex(null, null);
+    flex-wrap: wrap;
+    transition: .5s;
+    @include wh(100%, 250px);
+    @include mp(20px, null);
+    max-width: 28%;
+    .imgbox{
+      @include wh(100%, 80%);
+      img{
+        @include wh(100%, 100%);
+        object-fit: cover;
+      }
+    }
+    .textbox{
+      @include wh(100%, 20%);
+      overflow: hidden;
+      h3{
+        color: $white;
+        font-size: 0.8rem;
+        @include mp(0, 8px 11px);
+        text-align:center;
+        
+      }
+    }
+
+  }
 }
 
 

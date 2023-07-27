@@ -10,7 +10,8 @@ const menuOne = document.querySelector('.menuone')
 const dropDown = document.querySelector('.dropdown')
 const viewCon = document.querySelector('.itemview-container')
 const itemCardcon = document.querySelector('.item-card-container')
-const cardBoxs = document.querySelectorAll('.item-cardbox')
+const boxs = document.querySelectorAll('.box')
+let foodListGlobal = null 
 
 class Scroller{
   #isScrolling //스크롤 상태 (스크롤링중인지 아닌지 판단) #을 붙히면 외부에서 사용할수없고 이 클래스안에서만 변경가능
@@ -47,38 +48,6 @@ class Scroller{
   }
 }
 const scroller = new Scroller(false)
-
-// 로드시 카드컴포넌트 6개 띄우기
-window.addEventListener('load',(event)=>{
-  loading()
-  itemCardcon.innerHTML += getCardBox(3)
-
-  window.addEventListener('scroll', (event) => {
-    //무한스크롤
-    const scrollHeight = Math.max(   // 전체문서 높이 (스크롤이벤트 내부에 있어야 함)
-      document.body.scrollHeight, document.documentElement.scrollHeight,
-      document.body.offsetHeight, document.documentElement.offsetHeight,
-      document.body.clientHeight, document.documentElement.clientHeight
-    );
-
-    console.log(window.pageYOffset)
-    console.log(document.documentElement.clientHeight)
-    console.log(scrollHeight)
-    if(Math.abs(window.pageYOffset+ document.documentElement.clientHeight - scrollHeight) == 0){
-      console.log('바닥에가까워진스크롤')
-      itemCardcon.innerHTML += getCardBox(6)
-    }
-    
-  })
-})
-//더미 컨테이너 생성
-function getCardBox(num){
-  let CardBox = ''
-  for(let i=0; i<num; i++){
-    CardBox += `<div class="item-cardbox"></div>`
-  }
-  return CardBox
-}
 
 //모달창 열기
 function openModal () {
@@ -154,15 +123,22 @@ document.addEventListener('click',dropClose)
 
 
 //가운데 api로 가져온 데이터 스크롤추가
-const url = 'https://the-mexican-food-db.p.rapidapi.com/';
+// const url = 'https://the-mexican-food-db.p.rapidapi.com/';
+// const options = {
+// 	method: 'GET',
+// 	headers: {
+// 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
+// 		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
+// 	}
+// };
+const url = 'https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?nutrition-type=cooking&category%5B0%5D=generic-foods&health%5B0%5D=alcohol-free';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
+		'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com'
 	}
 };
-
 
 const itemCon = document.querySelector('.item-container')
 const clientHeight = document.documentElement.clientHeight
@@ -188,11 +164,12 @@ function loadApi(url, options){
 }
 
 function showData (foodList){
+  foodListGlobal = foodList
   return new Promise (function(resolve, reject){
     console.log(foodList)
 
      //api 데이터 화면에 추가
-    for(i=0; i<foodList.length; i++){
+    for(i=0; i<foodList.hints.length; i++){
       let box = document.createElement('div')
       itemCon.append(box)
       box.className = 'box'
@@ -206,16 +183,47 @@ function showData (foodList){
       textbox.className = 'textbox'
 
       let img = document.createElement('img')
-      img.src = foodList[i].image_link
+      img.src = foodList.hints[i].food.image
       imgbox.append(img)
       
       let title = document.createElement('h3')
-      title.innerHTML = `${foodList[i].name}`
+      title.innerHTML = `${foodList.hints[i].food.label}`
       textbox.append(title)
 
-
+      // //윈도우로드..
+      // window.addEventListener('load',(event)=>{
+      //   cardBoxs = box.cloneNode(true)
+      //   cardBoxs.className = 'card-box'
+      //   itemCardcon.append(box.cloneNode(true))
+      // })
+      // console.log(box)
       
+      window.addEventListener('scroll', (event) => {
+        //무한스크롤
+        const scrollHeight = Math.max(   // 전체문서 높이 (스크롤이벤트 내부에 있어야 함)
+          document.body.scrollHeight, document.documentElement.scrollHeight,
+          document.body.offsetHeight, document.documentElement.offsetHeight,
+          document.body.clientHeight, document.documentElement.clientHeight
+        );
+    
+        if(Math.abs(window.pageYOffset+ document.documentElement.clientHeight - scrollHeight) == 0){
+          console.log('바닥에가까워진스크롤')
+          // cardBoxs = box.cloneNode(true)
+          // cardBoxs.className = 'card-box'
+          // itemCardcon.append(cardBoxs)
+        }
+      })
+
+      //더미 컨테이너 생성
+      function getCardBox(num){
+        let CardBox = ''
+        CardBox.innerHTML = `<div class="card-box"></div>`
+        return CardBox
+      }
     }
+
+
+
     //로드완료시 메세지띄우고 3초뒤에 닫기
     let msgbox = document.createElement('div')
     document.body.append(msgbox)
@@ -266,6 +274,16 @@ function showData (foodList){
     }, 3000)
   })
 }
+// 윈도우 로드시 이벤트
+window.addEventListener('load',(event)=>{
+  if(foodListGlobal){
+    // 화면에 6개 보여주기 
+  }else{
+    loading()
+  }
+  
+})
+
 //로딩화면
 function loading(){
   const circles = document.querySelectorAll('.circle')
@@ -292,7 +310,7 @@ function loading(){
   loadevent = setInterval(loadinging, 300)
 
 }
-loadApi('https://the-mexican-food-db.p.rapidapi.com/',options)
+loadApi('https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?nutrition-type=cooking&category%5B0%5D=generic-foods&health%5B0%5D=alcohol-free',options)
     .then(foodList =>showData(foodList))
 
 
