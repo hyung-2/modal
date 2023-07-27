@@ -9,6 +9,24 @@ const closeModalBtn = document.querySelector('.closemodalbtn')
 const menuOne = document.querySelector('.menuone')
 const dropDown = document.querySelector('.dropdown')
 const viewCon = document.querySelector('.itemview-container')
+const itemCardcon = document.querySelector('.item-card-container')
+const cardBox = document.querySelector('.item-cardbox')
+
+// 로드시 카드컴포넌트 6개 띄우기
+
+window.addEventListener('load',(event)=>{
+  loading()
+  itemCardcon.innerHTML += getCardBox(2)
+    
+})
+//더미 컨테이너 생성
+function getCardBox(num){
+  let CardBox = ''
+  for(let i=0; i<num; i++){
+    CardBox += `<div class="item-cardbox"></div>`
+  }
+  return CardBox
+}
 
 //모달창 열기
 function openModal () {
@@ -85,14 +103,17 @@ document.addEventListener('click',dropClose)
 
 //2일차 - 가운데 api로 가져온 데이터 스크롤추가
 
-const url ='https://the-mexican-food-db.p.rapidapi.com/';
+
+const url = 'https://youtube-music-api-detailed.p.rapidapi.com/get_watch_playlist?video_id=1A7Qw88As64';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
+		'X-RapidAPI-Host': 'youtube-music-api-detailed.p.rapidapi.com'
 	}
 };
+
+
 const itemCon = document.querySelector('.item-container')
 const clientHeight = document.documentElement.clientHeight
 const scrollHeight = Math.max(
@@ -121,7 +142,7 @@ function showData (foodList){
     console.log(foodList)
 
      //api 데이터 화면에 추가
-    for(i=0; i<foodList.length; i++){
+    for(i=0; i<foodList.tracks.length; i++){
       let box = document.createElement('div')
       itemCon.append(box)
       box.className = 'box'
@@ -135,12 +156,16 @@ function showData (foodList){
       textbox.className = 'textbox'
 
       let img = document.createElement('img')
-      img.src = foodList[i].image
+      img.src = foodList.tracks[i].thumbnail[0].url
       imgbox.append(img)
       
       let title = document.createElement('h3')
-      title.innerHTML = `${foodList[i].title}`
+      title.innerHTML = `${foodList.tracks[i].title}`
       textbox.append(title)
+
+      
+      cardBox.append(box.cloneNode(true))
+      
     }
     //로드완료시 메세지띄우고 3초뒤에 닫기
     let msgbox = document.createElement('div')
@@ -174,36 +199,12 @@ function showData (foodList){
       imgBox.addEventListener('click',moreImg)
     }
 
-    //로딩화면
-    function loading(){
-      const circles = document.querySelectorAll('.circle')
-      let circle = 0
-      
-      function circleChange(){
-        circles[circle].classList.add('circle-style')
-      }
-      function circlenoChange(){
-        circles[prevCircle].classList.remove('circle-style')
-      }
-      
-      function loadinging(){
-        prevCircle = circle
-        circle ++
-        if(circle > circles.length -1){
-          circle =0
-        }
-        circleChange()
-        circlenoChange()
-        console.log(circle)
-      }
-      
-      loadevent = setInterval(loadinging, 300)
-    }
+
     
     //api가져오는동안 로딩창띄우기
     let loadingBox = document.querySelector('.loadingbox')
 
-    loading()
+
 
     setTimeout(()=>{
       loadingBox.classList.add('close')
@@ -218,10 +219,38 @@ function showData (foodList){
     }, 3000)
   })
 }
+//로딩화면
+function loading(){
+  const circles = document.querySelectorAll('.circle')
+  let circle = 0
+  
+  function circleChange(){
+    circles[circle].classList.add('circle-style')
+  }
+  function circlenoChange(){
+    circles[prevCircle].classList.remove('circle-style')
+  }
+  
+  function loadinging(){
+    prevCircle = circle
+    circle ++
+    if(circle > circles.length -1){
+      circle =0
+    }
+    circleChange()
+    circlenoChange()
+    console.log(circle)
+  }
+  
+  loadevent = setInterval(loadinging, 300)
 
-loadApi('https://the-mexican-food-db.p.rapidapi.com/',options)
+}
+loadApi('https://youtube-music-api-detailed.p.rapidapi.com/get_watch_playlist?video_id=1A7Qw88As64',options)
     .then(foodList =>showData(foodList))
 
+
+
+  
 
 const navbtn = document.querySelector('.navbtn')
 const hovertext = document.querySelector('.hovertext')
@@ -313,3 +342,5 @@ window.addEventListener('scroll',(event)=>{
     clickItem.classList.remove('visi')
   }
 })
+
+
