@@ -10,14 +10,66 @@ const menuOne = document.querySelector('.menuone')
 const dropDown = document.querySelector('.dropdown')
 const viewCon = document.querySelector('.itemview-container')
 const itemCardcon = document.querySelector('.item-card-container')
-const cardBox = document.querySelector('.item-cardbox')
+const cardBoxs = document.querySelectorAll('.item-cardbox')
+
+class Scroller{
+  #isScrolling //스크롤 상태 (스크롤링중인지 아닌지 판단) #을 붙히면 외부에서 사용할수없고 이 클래스안에서만 변경가능
+  #scrollEndTimer //스크롤이 끝나면 동작하는 타이머
+
+  constructor(isScrolling){ //멤버변수 초기화
+    this.#isScrolling = isScrolling
+    this.#scrollEndTimer = null 
+  }
+
+  //메서드 정의
+  getScrollPos(){ //현재 스크롤 위치 조회
+    return window.pageYOffset
+  }
+  setScrollPos(pos){ //해당 위치로 스크롤링
+    window.scrollTo(pos)
+    this.#setScrollState(true)
+  }
+  getScrollState(){ //스크롤 상태 조회
+    return this.#isScrolling
+  }
+  #setScrollState(state){ //스크롤 상태 변경
+    this.#isScrolling = state //state는 true or false 값
+  }
+  isScrollended(){ //스크롤링이 끝났음을 감지
+    return new Promise((resolve, reject) => {
+      clearTimeout(this.#scrollEndTimer)
+      this.#scrollEndTimer = setTimeout(() => {
+        //스크롤이 끝난 상태
+        this.#setScrollState(false)
+        resolve()
+      }, 100)
+    })
+  }
+}
+const scroller = new Scroller(false)
 
 // 로드시 카드컴포넌트 6개 띄우기
-
 window.addEventListener('load',(event)=>{
   loading()
-  itemCardcon.innerHTML += getCardBox(2)
+  itemCardcon.innerHTML += getCardBox(3)
+
+  window.addEventListener('scroll', (event) => {
+    //무한스크롤
+    const scrollHeight = Math.max(   // 전체문서 높이 (스크롤이벤트 내부에 있어야 함)
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    );
+
+    console.log(window.pageYOffset)
+    console.log(document.documentElement.clientHeight)
+    console.log(scrollHeight)
+    if(Math.abs(window.pageYOffset+ document.documentElement.clientHeight - scrollHeight) == 0){
+      console.log('바닥에가까워진스크롤')
+      itemCardcon.innerHTML += getCardBox(6)
+    }
     
+  })
 })
 //더미 컨테이너 생성
 function getCardBox(num){
@@ -101,15 +153,13 @@ menuOne.addEventListener('click',dropOpen)
 document.addEventListener('click',dropClose)
 
 
-//2일차 - 가운데 api로 가져온 데이터 스크롤추가
-
-
-const url = 'https://youtube-music-api-detailed.p.rapidapi.com/get_watch_playlist?video_id=1A7Qw88As64';
+//가운데 api로 가져온 데이터 스크롤추가
+const url = 'https://the-mexican-food-db.p.rapidapi.com/';
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': '8c87c444d5msha70b17f0e3d0ccdp16e6c3jsn805938a8245d',
-		'X-RapidAPI-Host': 'youtube-music-api-detailed.p.rapidapi.com'
+		'X-RapidAPI-Host': 'the-mexican-food-db.p.rapidapi.com'
 	}
 };
 
@@ -142,7 +192,7 @@ function showData (foodList){
     console.log(foodList)
 
      //api 데이터 화면에 추가
-    for(i=0; i<foodList.tracks.length; i++){
+    for(i=0; i<foodList.length; i++){
       let box = document.createElement('div')
       itemCon.append(box)
       box.className = 'box'
@@ -156,15 +206,14 @@ function showData (foodList){
       textbox.className = 'textbox'
 
       let img = document.createElement('img')
-      img.src = foodList.tracks[i].thumbnail[0].url
+      img.src = foodList[i].image_link
       imgbox.append(img)
       
       let title = document.createElement('h3')
-      title.innerHTML = `${foodList.tracks[i].title}`
+      title.innerHTML = `${foodList[i].name}`
       textbox.append(title)
 
-      
-      cardBox.append(box.cloneNode(true))
+
       
     }
     //로드완료시 메세지띄우고 3초뒤에 닫기
@@ -204,8 +253,6 @@ function showData (foodList){
     //api가져오는동안 로딩창띄우기
     let loadingBox = document.querySelector('.loadingbox')
 
-
-
     setTimeout(()=>{
       loadingBox.classList.add('close')
       clearInterval(loadevent)
@@ -239,13 +286,13 @@ function loading(){
     }
     circleChange()
     circlenoChange()
-    console.log(circle)
+    // console.log(circle)
   }
   
   loadevent = setInterval(loadinging, 300)
 
 }
-loadApi('https://youtube-music-api-detailed.p.rapidapi.com/get_watch_playlist?video_id=1A7Qw88As64',options)
+loadApi('https://the-mexican-food-db.p.rapidapi.com/',options)
     .then(foodList =>showData(foodList))
 
 
