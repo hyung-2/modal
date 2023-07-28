@@ -11,7 +11,8 @@ const dropDown = document.querySelector('.dropdown')
 const viewCon = document.querySelector('.itemview-container')
 const itemCardcon = document.querySelector('.item-card-container')
 const boxs = document.querySelectorAll('.box')
-let foodListGlobal = null
+let cardBoxs = document.querySelectorAll('.card-box')
+const alignBtn = document.querySelector('.alignbtn')
 
 class Scroller{
   #isScrolling //스크롤 상태 (스크롤링중인지 아닌지 판단) #을 붙히면 외부에서 사용할수없고 이 클래스안에서만 변경가능
@@ -395,7 +396,7 @@ window.addEventListener('resize',resizeUl)
 const mode = document.querySelector('.mode')
 const icons = mode.querySelectorAll('.icon')
 mode.addEventListener('click',(event) => {
-  let cardBoxs = document.querySelectorAll('.card-box')
+  
   document.body.classList.toggle('bright')
   nav.classList.toggle('bright')
   itemCon.classList.toggle('bright')
@@ -409,6 +410,7 @@ mode.addEventListener('click',(event) => {
     icon.classList.contains('close') ? icon.classList.remove('close') : icon.classList.add('close')
     }
 })
+
 //클릭한 아이템의 이름 왼쪽아래에 창 띄우기
 window.addEventListener('scroll',(event)=>{
   const viewcontent = document.querySelector('.viewcontent')
@@ -421,4 +423,50 @@ window.addEventListener('scroll',(event)=>{
   }
 })
 
+//카드컴포넌트 사전순 정렬
+function sorting(a,b){
+  if(a > b) return 1
+  if(a < b) return -1
+  return 0
 
+}
+
+function alignItem(event){
+  let cardBoxs = document.querySelectorAll('.card-box')
+  // let newtextboxs = [...textboxs]
+  let cardTitles = []
+  let cardAlignTitles =[]
+  let cardImg = []
+  // newtextboxs.forEach(cardtext => {
+  //   cardTitles.push(cardtext.innerText)
+  //   cardTitles.sort(sorting) 
+  //   cardBoxs = ''
+  //   if(alignBtn.innerText === '사전순'){
+  //     alignBtn.innerText = '기본순'
+
+  //   }else{
+  //     alignBtn.innerText = '사전순'
+      
+  //   }
+  //   })
+  console.log(cardBoxs)
+   for(i=0;i<cardBoxs.length;i++){
+    // alignTitle.sort(sorting)
+
+    cardTitles.push(cardBoxs[i].innerText)
+    cardImg.push(cardBoxs[i].children[0].innerHTML)
+  }
+  console.log(cardTitles)
+  console.log(cardImg)
+  if(alignBtn.innerText === '사전순'){
+        alignBtn.innerText = '기본순'
+      }else{
+        alignBtn.innerText = '사전순'
+      }
+      
+
+  
+
+  
+}
+alignBtn.addEventListener('click',alignItem)

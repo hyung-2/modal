@@ -83,7 +83,7 @@ body.bright{
     span, p{
       color: $white; }
   }
-  nav.bright, .item-container.bright, .itemview-container.bright{
+  nav.bright, .item-container.bright, .itemview-container.bright, .card-box.bright{
     background-color: transparent;
     box-shadow: 0 0 .5rem $dark;
     color: $dark;
@@ -101,6 +101,7 @@ body.bright{
     @include bgColor(51, 51, 51, .5, 0, 0, 18px, $dark);
     color: $white;
   }
+
 }
 html {
   scroll-behavior: smooth;
@@ -126,7 +127,7 @@ header {
           font-weight: bold;
           &:hover{
             text-shadow: 0 0 5px $white;
-            @include bgColor(255, 255, 255, .3, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
+            @include bgColor(255, 255, 255, 1, 0, 0, 0.3rem, rgba(255, 255, 255, .5));
           }
         }
         .dropdown{
@@ -166,8 +167,7 @@ header {
   }
 }
 
-.navbtn{
-  @include pos (fixed, null, 4px, 40px, null, 5);
+.navbtn, .alignbtn{
   // transform: translate(-50%,-50%);
   @include btnStyle(25px, 3px solid aquamarine);
   @include mp(null, 10px 25px);
@@ -175,14 +175,22 @@ header {
   color: $white;
   transition: .2s;
 }
+.navbtn{
+  @include pos (fixed, null, 4px, 40px, null, 5);
+
+}
+.alignbtn{
+  @include pos(fixed, null, 4px, 136px, null, 5);
+  height: 2.6rem;
+}
 .hovertext{
-  @include bgColor(150, 150, 150, .5, 0, 0, 18px, rgba(150,150,150,1));
+  @include bgColor(0, 0, 0, 1, 0, 0, 18px, rgba(150,150,150,1));
   @include wh(166px, 30px);
   text-align: center;
   line-height: 30px;
   @include mp(0, 10px);
   color: $white;
-  @include pos(absolute, null, 0, 135px, null, 1);
+  @include pos(absolute, null, 0, 135px, null, 5);
   border-radius:50px;
   display: none;
   transition: .2s;
@@ -434,34 +442,34 @@ body{
   @include pos (absolute, 10%, 100%, null, null, 0);
   @include flex(null, null);
   flex-wrap: wrap;
-  .card-box{
-    @include bgColor(0, 0, 0, .5, 0, 0, 1rem, aquamarine);
-    @include flex(null, null);
-    flex-wrap: wrap;
-    transition: .5s;
-    @include wh(100%, 250px);
-    @include mp(20px, null);
-    max-width: 28%;
-    .imgbox{
-      @include wh(100%, 80%);
-      img{
-        @include wh(100%, 100%);
-        object-fit: cover;
-      }
+}
+.card-box{
+  @include bgColor(0, 0, 0, .5, 0, 0, 1rem, aquamarine);
+  @include flex(null, null);
+  flex-wrap: wrap;
+  transition: .5s;
+  @include wh(100%, 250px);
+  @include mp(20px, null);
+  max-width: 28%;
+  .imgbox{
+    @include wh(100%, 80%);
+    img{
+      @include wh(100%, 100%);
+      object-fit: cover;
     }
-    .textbox{
-      @include wh(100%, 20%);
-      overflow: hidden;
-      h3{
-        color: $white;
-        font-size: 0.8rem;
-        @include mp(0, 8px 11px);
-        text-align:center;
-        
-      }
-    }
-
   }
+  .textbox{
+    @include wh(100%, 20%);
+    overflow: hidden;
+    h3{
+      color: $white;
+      font-size: 0.8rem;
+      @include mp(0, 8px 11px);
+      text-align:center;
+      
+    }
+  }
+
 }
 
 
