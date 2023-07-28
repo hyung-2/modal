@@ -11,7 +11,7 @@ const dropDown = document.querySelector('.dropdown')
 const viewCon = document.querySelector('.itemview-container')
 const itemCardcon = document.querySelector('.item-card-container')
 const boxs = document.querySelectorAll('.box')
-let foodListGlobal = null 
+let foodListGlobal = null
 
 class Scroller{
   #isScrolling //스크롤 상태 (스크롤링중인지 아닌지 판단) #을 붙히면 외부에서 사용할수없고 이 클래스안에서만 변경가능
@@ -153,10 +153,11 @@ function scrollX (){
 //  console.log(window.pageYOffset / (scrollHeight - clientHeight))
  itemCon.scrollLeft = window.pageYOffset / (scrollHeight - clientHeight) * ( itemCon.scrollWidth - itemCon.clientWidth)
 }
-
-
 window.addEventListener('scroll',scrollX)
 
+
+let offset = 0
+const numOfItems = 6
 //api가져와서 화면에 띄우기
 function loadApi(url, options){
   return fetch(url, options)
@@ -164,9 +165,10 @@ function loadApi(url, options){
 }
 
 function showData (foodList){
-  foodListGlobal = foodList
+  // 로딩화면 없애기 
+  console.log(foodList.hints)
+
   return new Promise (function(resolve, reject){
-    console.log(foodList)
 
      //api 데이터 화면에 추가
     for(i=0; i<foodList.hints.length; i++){
@@ -189,39 +191,25 @@ function showData (foodList){
       let title = document.createElement('h3')
       title.innerHTML = `${foodList.hints[i].food.label}`
       textbox.append(title)
-
-      // //윈도우로드..
-      // window.addEventListener('load',(event)=>{
-      //   cardBoxs = box.cloneNode(true)
-      //   cardBoxs.className = 'card-box'
-      //   itemCardcon.append(box.cloneNode(true))
-      // })
-      // console.log(box)
-      
-      window.addEventListener('scroll', (event) => {
-        //무한스크롤
-        const scrollHeight = Math.max(   // 전체문서 높이 (스크롤이벤트 내부에 있어야 함)
-          document.body.scrollHeight, document.documentElement.scrollHeight,
-          document.body.offsetHeight, document.documentElement.offsetHeight,
-          document.body.clientHeight, document.documentElement.clientHeight
-        );
-    
-        if(Math.abs(window.pageYOffset+ document.documentElement.clientHeight - scrollHeight) == 0){
-          console.log('바닥에가까워진스크롤')
-          // cardBoxs = box.cloneNode(true)
-          // cardBoxs.className = 'card-box'
-          // itemCardcon.append(cardBoxs)
-        }
-      })
-
-      //더미 컨테이너 생성
-      function getCardBox(num){
-        let CardBox = ''
-        CardBox.innerHTML = `<div class="card-box"></div>`
-        return CardBox
-      }
     }
+    // 초기 로딩시 6개 보여주기
+    loadCardbox(foodList)
 
+    
+    window.addEventListener('scroll', (event) => {
+      //무한스크롤
+      const scrollHeight = Math.max(   // 전체문서 높이 (스크롤이벤트 내부에 있어야 함)
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+      );
+  
+      if(Math.abs(window.pageYOffset+ document.documentElement.clientHeight - scrollHeight) == 0){
+        console.log('바닥에가까워진스크롤')
+        offset = offset + numOfItems 
+        loadCardbox(foodList)
+      }
+    })
 
 
     //로드완료시 메세지띄우고 3초뒤에 닫기
@@ -255,34 +243,59 @@ function showData (foodList){
     for (let imgBox of imgBoxs){
       imgBox.addEventListener('click',moreImg)
     }
-
-
     
     //api가져오는동안 로딩창띄우기
     let loadingBox = document.querySelector('.loadingbox')
-
+    loading()
     setTimeout(()=>{
       loadingBox.classList.add('close')
       clearInterval(loadevent)
       resolve(foodList)
     },1000)
-
+    
     setTimeout(()=> {
       msgbox.classList.add('close')
       resolve(foodList)
-
+      
     }, 3000)
   })
 }
-// 윈도우 로드시 이벤트
-window.addEventListener('load',(event)=>{
-  if(foodListGlobal){
-    // 화면에 6개 보여주기 
-  }else{
-    loading()
+
+//6개씩 불러오기 함수
+function loadCardbox(foodList){
+  for(let i=offset; i<offset+numOfItems; i++){
+    let cardBox = document.createElement('div')
+    itemCardcon.append(cardBox)
+    cardBox.className = 'card-box'
+
+    let imgbox = document.createElement('div')
+    cardBox.append(imgbox)
+    imgbox.className = 'imgbox'
+    
+    let textbox = document.createElement('div')
+    cardBox.append(textbox)
+    textbox.className = 'textbox'
+
+    let img = document.createElement('img')
+    img.src = foodList.hints[i].food.image
+    imgbox.append(img)
+    
+    let title = document.createElement('h3')
+    title.innerHTML = `${foodList.hints[i].food.label}`
+    textbox.append(title)
   }
-  
-})
+}
+
+
+loadApi('https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?nutrition-type=cooking&category%5B0%5D=generic-foods&health%5B0%5D=alcohol-free',options)
+    .then(foodList =>showData(foodList))
+
+//더미 컨테이너 생성
+function getCardBox(num){
+  let CardBox = ''
+  CardBox.innerHTML = `<div class="card-box"></div>`
+  return CardBox
+}
 
 //로딩화면
 function loading(){
@@ -310,12 +323,8 @@ function loading(){
   loadevent = setInterval(loadinging, 300)
 
 }
-loadApi('https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?nutrition-type=cooking&category%5B0%5D=generic-foods&health%5B0%5D=alcohol-free',options)
-    .then(foodList =>showData(foodList))
 
 
-
-  
 
 const navbtn = document.querySelector('.navbtn')
 const hovertext = document.querySelector('.hovertext')
@@ -386,11 +395,15 @@ window.addEventListener('resize',resizeUl)
 const mode = document.querySelector('.mode')
 const icons = mode.querySelectorAll('.icon')
 mode.addEventListener('click',(event) => {
+  let cardBoxs = document.querySelectorAll('.card-box')
   document.body.classList.toggle('bright')
   nav.classList.toggle('bright')
   itemCon.classList.toggle('bright')
   viewCon.classList.toggle('bright')
   ul.classList.toggle('bright')
+  
+  for(cardBox of cardBoxs){
+  cardBox.classList.toggle('bright')}
 
   for(let icon of icons){
     icon.classList.contains('close') ? icon.classList.remove('close') : icon.classList.add('close')
