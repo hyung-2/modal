@@ -145,6 +145,12 @@ header {
             }
           }
         }
+        input{
+          border: none;
+          padding: 1rem;
+          left: 50%;
+          transform: translateX(-50%);
+        }
       }
     }
   }

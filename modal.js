@@ -424,49 +424,48 @@ window.addEventListener('scroll',(event)=>{
 })
 
 //카드컴포넌트 사전순 정렬
-function sorting(a,b){
-  if(a > b) return 1
-  if(a < b) return -1
-  return 0
 
-}
-
+const imgboxs = document.querySelectorAll('.card-box .imgbox')
+const textboxs = document.querySelectorAll('.card-box .textbox')
+const cardTitles = []
+console.log(textboxs)
+textboxs.forEach(cardtext => {
+  cardTitles.push({ title: cardtext.innerText, src: cardtext.previousElementSibling.innerHTML})
+})
 function alignItem(event){
-  let cardBoxs = document.querySelectorAll('.card-box')
-  // let newtextboxs = [...textboxs]
-  let cardTitles = []
-  let cardAlignTitles =[]
-  let cardImg = []
-  // newtextboxs.forEach(cardtext => {
-  //   cardTitles.push(cardtext.innerText)
-  //   cardTitles.sort(sorting) 
-  //   cardBoxs = ''
-  //   if(alignBtn.innerText === '사전순'){
-  //     alignBtn.innerText = '기본순'
-
-  //   }else{
-  //     alignBtn.innerText = '사전순'
-      
-  //   }
-  //   })
-  console.log(cardBoxs)
-   for(i=0;i<cardBoxs.length;i++){
-    // alignTitle.sort(sorting)
-
-    cardTitles.push(cardBoxs[i].innerText)
-    cardImg.push(cardBoxs[i].children[0].innerHTML)
-  }
-  console.log(cardTitles)
-  console.log(cardImg)
+  reCardTitles = [...cardTitles]
   if(alignBtn.innerText === '사전순'){
-        alignBtn.innerText = '기본순'
-      }else{
-        alignBtn.innerText = '사전순'
-      }
-      
+    reCardTitles.sort(function(a,b){
+      if(a.title > b.title) return 1
+      if(a.title < b.title) return -1
+      return 0
+    }) 
+    replace(reCardTitles)
+    alignBtn.innerText = '기본순'
+  }else{
+    
+    replace(cardTitles)
+    alignBtn.innerText = '사전순'
+  }
+  console.log(reCardTitles)
+  console.log(cardTitles)
 
-  
-
-  
+  function replace(card){
+    cardBoxs = ''
+    for(i=0; i<card.length; i++){
+      imgboxs[i].innerHTML = `${card[i].src}`
+      textboxs[i].innerHTML = `<h3>${card[i].title}</h3>`
+    }
+  }
 }
 alignBtn.addEventListener('click',alignItem)
+
+
+//검색창에 검색한 결과만 나오게하기
+const search = document.querySelector('.search')
+function searching(e){
+  console.log(e.target.value)
+  // if(textboxs.innerHTML)
+}
+
+search.addEventListener('keyup',searching)
