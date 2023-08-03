@@ -245,6 +245,44 @@ function showData (foodList){
       imgBox.addEventListener('click',moreImg)
     }
     
+    //카드컴포넌트 사전순 정렬
+
+const imgboxs = document.querySelectorAll('.card-box .imgbox')
+const textboxs = document.querySelectorAll('.card-box .textbox')
+const cardTitles = []
+console.log(textboxs)
+textboxs.forEach(cardtext => {
+  cardTitles.push({ title: cardtext.innerText, src: cardtext.previousElementSibling.innerHTML})
+  console.log(cardTitles)
+})
+function alignItem(event){
+  reCardTitles = [...cardTitles]
+  if(alignBtn.innerText === '사전순'){
+    reCardTitles.sort(function(a,b){
+      if(a.title > b.title) return 1
+      if(a.title < b.title) return -1
+      return 0
+    }) 
+    replace(reCardTitles)
+    alignBtn.innerText = '기본순'
+  }else{
+    
+    replace(cardTitles)
+    alignBtn.innerText = '사전순'
+  }
+  console.log(reCardTitles)
+  console.log(cardTitles)
+
+  function replace(card){
+    cardBoxs = ''
+    for(i=0; i<card.length; i++){
+      imgboxs[i].innerHTML = `${card[i].src}`
+      textboxs[i].innerHTML = `<h3>${card[i].title}</h3>`
+    }
+  }
+}
+alignBtn.addEventListener('click',alignItem)
+
     //api가져오는동안 로딩창띄우기
     let loadingBox = document.querySelector('.loadingbox')
     loading()
@@ -260,6 +298,8 @@ function showData (foodList){
       
     }, 3000)
   })
+
+  
 }
 
 //6개씩 불러오기 함수
@@ -423,42 +463,7 @@ window.addEventListener('scroll',(event)=>{
   }
 })
 
-//카드컴포넌트 사전순 정렬
 
-const imgboxs = document.querySelectorAll('.card-box .imgbox')
-const textboxs = document.querySelectorAll('.card-box .textbox')
-const cardTitles = []
-console.log(textboxs)
-textboxs.forEach(cardtext => {
-  cardTitles.push({ title: cardtext.innerText, src: cardtext.previousElementSibling.innerHTML})
-})
-function alignItem(event){
-  reCardTitles = [...cardTitles]
-  if(alignBtn.innerText === '사전순'){
-    reCardTitles.sort(function(a,b){
-      if(a.title > b.title) return 1
-      if(a.title < b.title) return -1
-      return 0
-    }) 
-    replace(reCardTitles)
-    alignBtn.innerText = '기본순'
-  }else{
-    
-    replace(cardTitles)
-    alignBtn.innerText = '사전순'
-  }
-  console.log(reCardTitles)
-  console.log(cardTitles)
-
-  function replace(card){
-    cardBoxs = ''
-    for(i=0; i<card.length; i++){
-      imgboxs[i].innerHTML = `${card[i].src}`
-      textboxs[i].innerHTML = `<h3>${card[i].title}</h3>`
-    }
-  }
-}
-alignBtn.addEventListener('click',alignItem)
 
 
 //검색창에 검색한 결과만 나오게하기
